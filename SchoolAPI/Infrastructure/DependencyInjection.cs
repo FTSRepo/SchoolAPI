@@ -1,7 +1,4 @@
-﻿using System.Reflection.Metadata;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using SchoolAPI.Infrastructure.Factory;
+﻿using SchoolAPI.Infrastructure.Factory;
 using SchoolAPI.Repositories.AttendanceRepository;
 using SchoolAPI.Repositories.AuthRepository;
 using SchoolAPI.Repositories.CommonRepository;
@@ -10,6 +7,7 @@ using SchoolAPI.Repositories.HomeworkRepository;
 using SchoolAPI.Repositories.LeaveRepository;
 using SchoolAPI.Repositories.MessageRepository;
 using SchoolAPI.Repositories.OnelineClassRepository;
+using SchoolAPI.Repositories.RegistrationRepository;
 using SchoolAPI.Services.AttendanceService;
 using SchoolAPI.Services.AuthService;
 using SchoolAPI.Services.CommonService;
@@ -17,6 +15,7 @@ using SchoolAPI.Services.FeeManagement;
 using SchoolAPI.Services.Homework;
 using SchoolAPI.Services.MessageService;
 using SchoolAPI.Services.OnelineClassService;
+using SchoolAPI.Services.RegistrationService;
 
 namespace SchoolAPI.Infrastructure
 {
@@ -45,6 +44,8 @@ namespace SchoolAPI.Infrastructure
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<IAttendanceService, AttendanceService>();
+            services.AddScoped<IRegistrationRepository, RegistrationRepository>();
+            services.AddScoped<IRegistrationService, RegistrationService>();
 
             return services;
         }
