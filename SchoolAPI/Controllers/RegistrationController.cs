@@ -93,7 +93,6 @@ namespace SchoolAPI.Controllers
 
         [HttpPost]
         [Route("saveRegistration")]
-        [AllowAnonymous]
         public async Task<IActionResult> SaveRegistration([FromBody] StudentRegistrationModelReq studentRegistrationModel)
         {
             string result = "", sendSMS = "";
