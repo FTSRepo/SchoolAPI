@@ -12,7 +12,7 @@ namespace SchoolAPI.Services.RegistrationService
         Task<string> SaveRegistrationAsync(StudentRegistrationModel objstudentregistration);
         Task<string> SendSMS(StudentRegistrationModel registrationModel);
         Task<List<StudentRegistrationModelRes>> StudentRegistrationAllRecordAsync(int schoolId, int regno, string? type = null, string requestType = "");
-        Task<StudentRegistrationModel?> StudentRegistrationByRegNoAsync(int regNo, int schoolId);
+        Task<StudentRegistrationModelRes?> StudentRegistrationByRegNoAsync(int regNo, int schoolId);
         Task<List<EnquiryM>> GetEnquiriesAsync(int schoolId, string requestType);
         Task<EnquiryM> GetEnquiryByIdAsync(int schoolId, int enquiryId);
     }

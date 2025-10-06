@@ -87,7 +87,7 @@ namespace SchoolAPI.Services.RegistrationService
             return studentRegistrations;
         }
          
-        public async Task<StudentRegistrationModel?> StudentRegistrationByRegNoAsync(int regNo, int schoolId)
+        public async Task<StudentRegistrationModelRes?> StudentRegistrationByRegNoAsync(int regNo, int schoolId)
         {
             DataTable dt = await _registrationRepository.StudentRegistrationAllRecordAsync(schoolId, regNo, null, "");
 
@@ -115,56 +115,22 @@ namespace SchoolAPI.Services.RegistrationService
             DataRow dr = dt.Rows[0];
             return mapEnquiry(dr);
         }
-        private static StudentRegistrationModel MapStudent(DataRow dr)
+        private static StudentRegistrationModelRes MapStudent(DataRow dr)
         {
-            return new StudentRegistrationModel
+            return new StudentRegistrationModelRes
             {
-                AadharNo = dr.GetString("AadharNo"),
-                Addressline1ph = dr.GetString("Addressline1ph"),
-                AddressLine1S = dr.GetString("AddressLine1S"),
-                CategoryName = dr.GetString("CategoryName"),
-                AddressLine2S = dr.GetString("AddressLine2S"),
-                Addresslineph = dr.GetString("Addresslineph"),
-                DateofRegistration1 = dr.GetString("DateofRegistration1"),
-                BirthPlace = dr.GetString("BirthPlace"),
-                BloodGroup = dr.GetInt("BloodGroup"),
-                BloodGroupName = dr.GetString("BloodGroupName"),
-                Category = dr.GetInt("Category"),
-                cityp = dr.GetString("CityType"),
-                Cityph = dr.GetString("CityPh"),
-                Class = dr.GetInt("Class"),            // Class is int, use proper column
-                ClassName = dr.GetString("ClassName"),
-                DateofRegistration = dr.GetDate("DateofRegistration"),
-                Dob = dr.GetDate("Dob"),
-                EducationQualificationfather = dr.GetString("EducationQualificationfather"),
-                EducationQualificationmother = dr.GetString("EducationQualificationmother"),
-                FatherMobile1 = dr.GetString("FatherMobile1"),
-                fathermobilenumber = dr.GetString("fathermobilenumber"),
-                Firstname = dr.GetString("Firstname"),
-                Firstnamefather = dr.GetString("Firstnamefather"),
-                Firstnamemother = dr.GetString("Firstnamemother"),
-                Fname = dr.GetString("Fname"),
-                Gender = dr.GetString("Gender"),
-                lastName = dr.GetString("lastName"),
-                Lastnamefather = dr.GetString("Lastnamefather"),
-                LastNamemother = dr.GetString("LastNamemother"),
-                MiddleName = dr.GetString("MiddleName"),
-                Middlenamefather = dr.GetString("Middlenamefather"),
-                Middlenamemother = dr.GetString("Middlenamemother"),
-                mobile1 = dr.GetString("mobile1"),
-                mobilenop = dr.GetString("MobileNo"),
-                ModifiedBy = dr.GetString("ModifiedBy"),
-                Name = dr.GetString("Name"),
-                Occupation = dr.GetString("Occupation"),
-                Occupationmother = dr.GetString("Occupationmother"),
-                Presentdistance = dr.GetString("Presentdistance"),
-                ProfessionalQualificationfather = dr.GetString("ProfessionalQualificationfather"),
-                ProfessionalQualificationmother = dr.GetString("ProfessionalQualificationmother"),
-                Remark = dr.GetString("Remark"),
-                ReligionName = dr.GetString("ReligionName"),
-                status = dr.GetString("status"),
-                Sessionid = dr.GetInt("Sessionid"),
-                Schoolid = dr.GetInt("Schoolid")
+                Regno = Convert.ToInt32(dr["Regno"]),
+                Registration = Convert.ToString(dr["Registration"]),
+                Date = Convert.ToString(dr["Date"]),
+                Status = Convert.ToInt32(dr["Status"]),
+                Name = Convert.ToString(dr["Name"]),
+                ClassName = Convert.ToString(dr["ClassName"]),
+                Dob = Convert.ToString(dr["DOB"]),
+                Gender = Convert.ToString(dr["Gender"]),
+                FatherMobileNumber = Convert.ToString(dr["FatherMobileNumber"]),
+                FatherName = Convert.ToString(dr["Fname"]),
+                ReciptNo = Convert.ToInt32(dr["ReciptNo"]),
+                RegFee = Convert.ToInt32(dr["RegFee"])
             };
         }
         private static EnquiryM mapEnquiry(DataRow dr)
