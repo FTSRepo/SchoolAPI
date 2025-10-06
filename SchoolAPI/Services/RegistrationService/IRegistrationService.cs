@@ -10,6 +10,6 @@ namespace SchoolAPI.Services.RegistrationService
         Task<List<ReligionM>> BindReligionDropdownsAsync();
         Task<string> SaveRegistrationAsync(StudentRegistrationModel objstudentregistration);
         Task<string> SendSMS(StudentRegistrationModel registrationModel);
-        Task<List<StudentRegistrationModel>> StudentRegistrationAllRecordAsync(int schoolId, int regno, string? type = null, string requestType = "");
+        Task<List<StudentRegistrationModelRes>> StudentRegistrationAllRecordAsync(int schoolId, int regno, string? type = null, string requestType = "");
     }
 }

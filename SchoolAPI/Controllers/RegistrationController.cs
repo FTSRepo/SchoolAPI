@@ -122,7 +122,7 @@ namespace SchoolAPI.Controllers
         [Route("GetRegistration")]
         public async Task<IActionResult> GetRegistration(int schoolId)
         {
-            var result = await _registrationService.StudentRegistrationAllRecordAsync(schoolId, 0, null, "All");
+            var result = await _registrationService.StudentRegistrationAllRecordAsync(schoolId, 0, "All", null);
             if (result != null)
             {
                 return Ok(result);

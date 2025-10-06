@@ -71,60 +71,27 @@ namespace SchoolAPI.Services.RegistrationService
             }
             return result;
         }
-        public async Task<List<StudentRegistrationModel>> StudentRegistrationAllRecordAsync(int schoolId, int regno, string? type = null, string requestType = "")
+        public async Task<List<StudentRegistrationModelRes>> StudentRegistrationAllRecordAsync(int schoolId, int regno, string? type = null, string requestType = "")
         {
-            List<StudentRegistrationModel> studentRegistrations = [];
+            List<StudentRegistrationModelRes> studentRegistrations = [];
             DataTable dt = await _registrationRepository.StudentRegistrationAllRecordAsync(schoolId, regno, type, requestType);
             foreach(DataRow dr in dt.Rows)
             {
-                studentRegistrations.Add(new StudentRegistrationModel()
+                studentRegistrations.Add(new StudentRegistrationModelRes()
                 {
-                    AadharNo = Convert.ToString(dr["AadharNo"]),
-                    Addressline1ph = Convert.ToString(dr["Addressline1ph"]),
-                    AddressLine1S = Convert.ToString(dr["AddressLine1S"]),
-                    CategoryName = Convert.ToString(dr["CategoryName"]),
-                    AddressLine2S = Convert.ToString(dr["AddressLine2S"]),
-                    Addresslineph = Convert.ToString(dr["Addresslineph"]),
-                    DateofRegistration1 = Convert.ToString(dr["DateofRegistration1"]),
-                    BirthPlace = Convert.ToString(dr["BirthPlace"]),
-                    BloodGroup = Convert.ToInt32(dr["BloodGroup"]),
-                    BloodGroupName = Convert.ToString(dr["BloodGroupName"]),
-                    Category = Convert.ToInt32(dr["Category"]),
-                    cityp = Convert.ToString(dr["CityType"]),
-                    Cityph = Convert.ToString(dr["CityPh"]),
-                    Class = Convert.ToInt32(dr["ClassName"]),
-                    ClassName = Convert.ToString(dr["ClassName"]),                   
-                    DateofRegistration = Convert.ToDateTime(dr["DateofRegistration"]),
-                    Dob = Convert.ToDateTime(dr["Dob"]), // Keeping only one of Dob/DOB/Dob1
-                    EducationQualificationfather = Convert.ToString(dr["EducationQualificationfather"]),
-                    EducationQualificationmother = Convert.ToString(dr["EducationQualificationmother"]),
-                    FatherMobile1 = Convert.ToString(dr["FatherMobile1"]),
-                    fathermobilenumber = Convert.ToString(dr["fathermobilenumber"]),
-                    Firstname = Convert.ToString(dr["Firstname"]),
-                    Firstnamefather = Convert.ToString(dr["Firstnamefather"]),
-                    Firstnamemother = Convert.ToString(dr["Firstnamemother"]),
-                    Fname = Convert.ToString(dr["Fname"]),
-                    Gender = Convert.ToString(dr["Gender"]),
-                    lastName = Convert.ToString(dr["lastName"]),
-                    Lastnamefather = Convert.ToString(dr["Lastnamefather"]),
-                    LastNamemother = Convert.ToString(dr["LastNamemother"]),
-                    MiddleName = Convert.ToString(dr["MiddleName"]),
-                    Middlenamefather = Convert.ToString(dr["Middlenamefather"]),
-                    Middlenamemother = Convert.ToString(dr["Middlenamemother"]),
-                    mobile1 = Convert.ToString(dr["mobile1"]),
-                    mobilenop = Convert.ToString(dr["MobileNo"]), // Only kept once
-                    ModifiedBy = Convert.ToString(dr["ModifiedBy"]),
-                    Name = Convert.ToString(dr["Name"]),
-                    Occupation = Convert.ToString(dr["Occupation"]),
-                    Occupationmother = Convert.ToString(dr["Occupationmother"]),
-                    Presentdistance = Convert.ToString(dr["Presentdistance"]),
-                    ProfessionalQualificationfather = Convert.ToString(dr["ProfessionalQualificationfather"]),
-                    ProfessionalQualificationmother = Convert.ToString(dr["ProfessionalQualificationmother"]),
+                    Regno = Convert.ToInt32(dr["Regno"]),
+                    Registration = Convert.ToString(dr["Registration"]),
+                    Date = Convert.ToString(dr["Date"]),
                     Remark = Convert.ToString(dr["Remark"]),
-                    ReligionName = Convert.ToString(dr["ReligionName"]),
-                    status = Convert.ToString(dr["status"]),
-                    Sessionid = Convert.ToInt32(dr["Sessionid"]),
-                    Schoolid = Convert.ToInt32(dr["Schoolid"])
+                    Status = Convert.ToInt32(dr["Status"]),
+                    Name = Convert.ToString(dr["Name"]),
+                    ClassName= Convert.ToString(dr["ClassName"]),
+                    Dob = Convert.ToString(dr["DOB"]),
+                    Gender = Convert.ToString(dr["Gender"]),
+                    FatherMobileNumber = Convert.ToString(dr["FatherMobileNumber"]),
+                    FatherName = Convert.ToString(dr["Fname"]),
+                    ReciptNo= Convert.ToInt32(dr["ReciptNo"]),
+                    RegFee= Convert.ToInt32(dr["RegFee"])
                 });
 
             }

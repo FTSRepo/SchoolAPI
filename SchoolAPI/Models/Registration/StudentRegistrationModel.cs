@@ -66,6 +66,27 @@
         public int Communication { get; set; }
         public int RegFee { get; set; }
         public int SiblingsStudentId { get; set; }
+        public int Status { get; set; }
+        public string FatherMobileNumber { get; set; }
+        public string FatherName { get; set; }
+        public int ReciptNo { get; set; }
     }
 
+    public class StudentRegistrationModelRes
+    {
+        public int Regno { get; set; }
+        public string Registration { get; set; }
+        public string Date { get; set; }
+        public string Remark { get; set; }
+        public int Status { get; set; }
+        public string Name { get; set; }
+        public string ClassName { get; set; }
+        public string Dob { get; set; }
+        public string Gender { get; set; }
+        public string FatherMobileNumber { get; set; }
+        public string FatherName { get; set; }
+        public int ReciptNo { get; set; }
+        public int RegFee { get; set; } 
+
+    }
 }
