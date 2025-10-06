@@ -118,7 +118,7 @@ namespace SchoolAPI.Repositories.RegistrationRepository
             return result;
         }
 
-        public async Task<string> SaveRegistrationAsync(StudentRegistrationModel objstudentregistration)
+        public async Task<string> SaveRegistrationAsync(StudentRegistrationModelReq objstudentregistration)
         {
             string result = string.Empty;
 
@@ -129,62 +129,80 @@ namespace SchoolAPI.Repositories.RegistrationRepository
 
                 command.Parameters.AddRange(new[]
                 {
-            new SqlParameter("@Registration", objstudentregistration.Registration),
-            new SqlParameter("@DateofRegistration", objstudentregistration.DateofRegistration1),
-            new SqlParameter("@Class", objstudentregistration.Class),
-            new SqlParameter("@Firstname", objstudentregistration.Firstname),
-            new SqlParameter("@MiddleName", objstudentregistration.MiddleName),
-            new SqlParameter("@lastName", objstudentregistration.lastName),
-            new SqlParameter("@Dob", objstudentregistration.Dob1),
-            new SqlParameter("@BirthPlace", objstudentregistration.BirthPlace),
-            new SqlParameter("@radioValue", objstudentregistration.radioValue),
-            new SqlParameter("@AddressLine1S", objstudentregistration.AddressLine1S),
-            new SqlParameter("@AddressLine2S", objstudentregistration.AddressLine2S),
-            new SqlParameter("@CountryS", objstudentregistration.CountryS),
-            new SqlParameter("@Statep", objstudentregistration.Satep),
-            new SqlParameter("@cityp", objstudentregistration.cityp),
-            new SqlParameter("@Pincodep", objstudentregistration.Pincodep),
-            new SqlParameter("@fathermobilenumber", objstudentregistration.fathermobilenumber),
-            new SqlParameter("@mobilenop", objstudentregistration.mobilenop),
-            new SqlParameter("@Presentdistance", objstudentregistration.Presentdistance),
-            new SqlParameter("@Addressline1ph", objstudentregistration.Addressline1ph),
-            new SqlParameter("@Addresslineph", objstudentregistration.Addresslineph),
-            new SqlParameter("@Countryph", objstudentregistration.Countryph),
-            new SqlParameter("@Stateph", objstudentregistration.Stateph),
-            new SqlParameter("@Cityph", objstudentregistration.Cityph),
-            new SqlParameter("@PinCodeph", objstudentregistration.PinCodeph),
-            new SqlParameter("@Distance", objstudentregistration.Distance),
-            new SqlParameter("@Firstnamefather", objstudentregistration.Firstnamefather),
-            new SqlParameter("@Middlenamefather", objstudentregistration.Middlenamefather),
-            new SqlParameter("@Lastnamefather", objstudentregistration.Lastnamefather),
-            new SqlParameter("@EducationQualificationfather", objstudentregistration.EducationQualificationfather),
-            new SqlParameter("@ProfessionalQualificationfather", objstudentregistration.ProfessionalQualificationfather),
-            new SqlParameter("@Occupation", objstudentregistration.Occupation),
-            new SqlParameter("@Firstnamemother", objstudentregistration.Firstnamemother),
-            new SqlParameter("@Middlenamemother", objstudentregistration.Middlenamemother),
-            new SqlParameter("@LastNamemother", objstudentregistration.LastNamemother),
-            new SqlParameter("@EducationQualificationmother", objstudentregistration.EducationQualificationmother),
-            new SqlParameter("@ProfessionalQualificationmother", objstudentregistration.ProfessionalQualificationmother),
-            new SqlParameter("@Occupationmother", objstudentregistration.Occupationmother),
-            new SqlParameter("@CreatedBY", objstudentregistration.CreatedBy),
-            new SqlParameter("@ModifidBy", objstudentregistration.ModifiedBy),
-            new SqlParameter("@schoolid", objstudentregistration.Schoolid),
-            new SqlParameter("@Sessionid", objstudentregistration.Sessionid),
-            new SqlParameter("@Fathermobileno1", objstudentregistration.FatherMobile1),
-            new SqlParameter("@mobile1", objstudentregistration.mobile1),
-            new SqlParameter("@AadharNo", objstudentregistration.AadharNo),
-            new SqlParameter("@RegFee", objstudentregistration.RegFee),
-            new SqlParameter("@BloodGroup", objstudentregistration.BloodGroup),
-            new SqlParameter("@Category", objstudentregistration.Category),
-            new SqlParameter("@Religion", objstudentregistration.Religion),
-            new SqlParameter("@SiblingsStudentId", objstudentregistration.SiblingsStudentId),
-            new SqlParameter("@Msg", SqlDbType.VarChar, 100) { Direction = ParameterDirection.Output }
-        });
 
-                await connection.OpenAsync();
-                await command.ExecuteNonQueryAsync();
+                                new SqlParameter("@Registration", objstudentregistration.Registration ?? (object)DBNull.Value),
+                                new SqlParameter("@DateofRegistration", objstudentregistration.DateofRegistration),
+                                new SqlParameter("@Class", objstudentregistration.Class),
+                                new SqlParameter("@Firstname", objstudentregistration.Firstname ?? (object)DBNull.Value),
+                                new SqlParameter("@MiddleName", objstudentregistration.MiddleName ?? (object)DBNull.Value),
+                                new SqlParameter("@LastName", objstudentregistration.LastName ?? (object)DBNull.Value),
+                                new SqlParameter("@Dob", objstudentregistration.Dob),
+                                new SqlParameter("@BirthPlace", objstudentregistration.BirthPlace ?? (object)DBNull.Value),
+                                new SqlParameter("@radioValue", objstudentregistration.RadioValue),
+                                new SqlParameter("@AddressLine1S", objstudentregistration.AddressLine1S ?? (object)DBNull.Value),
+                                new SqlParameter("@AddressLine2S", objstudentregistration.AddressLine2S ?? (object)DBNull.Value),
+                                new SqlParameter("@CountryS", objstudentregistration.CountryS),
+                                new SqlParameter("@Statep", objstudentregistration.Statep ?? (object)DBNull.Value),
+                                new SqlParameter("@cityp", objstudentregistration.Cityp ?? (object)DBNull.Value),
+                                new SqlParameter("@Pincodep", objstudentregistration.Pincodep),
+                                new SqlParameter("@fathermobilenumber", objstudentregistration.FatherMobileNumber ?? (object)DBNull.Value),
+                                new SqlParameter("@mobilenop", objstudentregistration.MobileNo ?? (object)DBNull.Value),
+                                new SqlParameter("@Presentdistance", objstudentregistration.PresentDistance ?? (object)DBNull.Value),
+                                new SqlParameter("@Addressline1ph", objstudentregistration.AddressLine1Ph ?? (object)DBNull.Value),
+                                new SqlParameter("@Addresslineph", objstudentregistration.AddressLinePh ?? (object)DBNull.Value),
+                                new SqlParameter("@Countryph", objstudentregistration.CountryPh),
+                                new SqlParameter("@Stateph", objstudentregistration.StatePh),
+                                new SqlParameter("@Cityph", objstudentregistration.CityPh ?? (object)DBNull.Value),
+                                new SqlParameter("@PinCodeph", objstudentregistration.PinCodePh),
+                                new SqlParameter("@Distance", objstudentregistration.Distance),
+    
+                                // Father details
+                                new SqlParameter("@Firstnamefather", objstudentregistration.FirstNameFather ?? (object)DBNull.Value),
+                                new SqlParameter("@Middlenamefather", objstudentregistration.MiddleNameFather ?? (object)DBNull.Value),
+                                new SqlParameter("@Lastnamefather", objstudentregistration.LastNameFather ?? (object)DBNull.Value),
+                                new SqlParameter("@EducationQualificationfather", objstudentregistration.EducationQualificationFather ?? (object)DBNull.Value),
+                                new SqlParameter("@ProfessionalQualificationfather", objstudentregistration.ProfessionalQualificationFather ?? (object)DBNull.Value),
+                                new SqlParameter("@Occupation", objstudentregistration.OccupationFather ?? (object)DBNull.Value),
 
-                result = command.Parameters["@Msg"].Value?.ToString() ?? string.Empty;
+                                // Mother details
+                                new SqlParameter("@Firstnamemother", objstudentregistration.FirstNameMother ?? (object)DBNull.Value),
+                                new SqlParameter("@Middlenamemother", objstudentregistration.MiddleNameMother ?? (object)DBNull.Value),
+                                new SqlParameter("@LastNamemother", objstudentregistration.LastNameMother ?? (object)DBNull.Value),
+                                new SqlParameter("@EducationQualificationmother", objstudentregistration.EducationQualificationMother ?? (object)DBNull.Value),
+                                new SqlParameter("@ProfessionalQualificationmother", objstudentregistration.ProfessionalQualificationMother ?? (object)DBNull.Value),
+                                new SqlParameter("@Occupationmother", objstudentregistration.OccupationMother ?? (object)DBNull.Value),
+
+                                new SqlParameter("@CreatedBY", objstudentregistration.CreatedBy ?? (object)DBNull.Value),
+                                new SqlParameter("@ModifidBy", objstudentregistration.ModifiedBy ?? (object)DBNull.Value),
+                                new SqlParameter("@schoolid", objstudentregistration.SchoolId),
+                                new SqlParameter("@Sessionid", objstudentregistration.SessionId),
+                                new SqlParameter("@Fathermobileno1", objstudentregistration.FatherMobileNo1 ?? (object)DBNull.Value),
+                                new SqlParameter("@mobile1", objstudentregistration.Mobile1 ?? (object)DBNull.Value),
+                                new SqlParameter("@AadharNo", objstudentregistration.AadharNo ?? (object)DBNull.Value),
+                                new SqlParameter("@RegFee", objstudentregistration.RegFee ?? (object)DBNull.Value),
+                                new SqlParameter("@BloodGroup", objstudentregistration.BloodGroup),
+                                new SqlParameter("@Category", objstudentregistration.Category),
+                                new SqlParameter("@Religion", objstudentregistration.Religion),
+                                new SqlParameter("@SiblingsStudentId", objstudentregistration.SiblingsStudentId),
+
+                                // OUTPUT parameter
+                                new SqlParameter("@msg", SqlDbType.VarChar, 100) { Direction = ParameterDirection.Output
+
+                                }
+                });
+                     
+                try
+                {
+                    await connection.OpenAsync();
+
+                    await command.ExecuteNonQueryAsync();
+
+                    result = command.Parameters["@Msg"].Value?.ToString() ?? string.Empty;
+                }
+                catch(Exception ex)
+                {
+                    throw ex;
+                }
             }
 
             return result;

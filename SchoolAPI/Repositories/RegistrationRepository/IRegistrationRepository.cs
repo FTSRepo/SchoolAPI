@@ -11,7 +11,7 @@ namespace SchoolAPI.Repositories.RegistrationRepository
         Task<DataTable> BindReligionDropdownsAsync();
         Task<List<BloodGroupDto>> GetBloodGroupAsync();
         Task<List<StateDto>> GetStates();
-        Task<string> SaveRegistrationAsync(StudentRegistrationModel objstudentregistration);
+        Task<string> SaveRegistrationAsync(StudentRegistrationModelReq objstudentregistration);
         Task<DataTable> StudentRegistrationAllRecordAsync(int schoolId, int regno, string? type = null, string requestType = "");
         Task<bool> DeleteRegRecordAsync(int id, int schoolId);
         Task<bool> UpdateRegistrationStatusAsync(int regNo, int schoolId, string status, string remark, int userId);

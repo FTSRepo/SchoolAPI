@@ -53,24 +53,24 @@ namespace SchoolAPI.Services.RegistrationService
             }
             return religionDropdownMs;
         }
-        public async Task<string> SaveRegistrationAsync(StudentRegistrationModel objstudentregistration)
+        public async Task<string> SaveRegistrationAsync(StudentRegistrationModelReq objstudentregistration)
         {
             return await _registrationRepository.SaveRegistrationAsync(objstudentregistration);
         }
 
-        public async Task<string> SendSMS(StudentRegistrationModel registrationModel)
+        public async Task<string> SendSMS(StudentRegistrationModelReq registrationModel)
         {
             string result = "";
-            if (Regex.Match(registrationModel.fathermobilenumber.Trim(), @"^[6789]\d{9}$").Success)
+            if (Regex.Match(registrationModel.FatherMobileNo1.Trim(), @"^[6789]\d{9}$").Success)
             {
-                if (Convert.ToInt32( await _commonService.GetSMSCreditAsync(registrationModel.Schoolid)) > 0)
+                if (Convert.ToInt32( await _commonService.GetSMSCreditAsync(registrationModel.SchoolId)) > 0)
                 {
                     string template;
                     List<string> smsresponse = new List<string>();
-                    DataTable templateDt = await _commonService.GetSMSTemaplateDescAsync(registrationModel.Schoolid, 4);
+                    DataTable templateDt = await _commonService.GetSMSTemaplateDescAsync(registrationModel.SchoolId, 4);
                     template = templateDt.Rows[0]["TemplateDesc"].ToString();
-                    template = template == null ? "R/p Resgistration for your ward-, '" + registrationModel.Firstname + "' is completed successfully with Reg No.'" + registrationModel.Registration + "' on Date:'" + registrationModel.DateofRegistration1.ToString() + "'" : template.Replace("@", registrationModel.Firstname).Replace("#", registrationModel.DateofRegistration1.ToString()).Replace("$", registrationModel.Registration);
-                    result = await _commonService.FTSMessanger(template, registrationModel.fathermobilenumber, registrationModel.Schoolid, 4, "");
+                    template = template == null ? "R/p Resgistration for your ward-, '" + registrationModel.Firstname + "' is completed successfully with Reg No.'" + registrationModel.Registration + "' on Date:'" + registrationModel.DateofRegistration.ToString() + "'" : template.Replace("@", registrationModel.Firstname).Replace("#", registrationModel.DateofRegistration.ToString()).Replace("$", registrationModel.Registration);
+                    result = await _commonService.FTSMessanger(template, registrationModel.FatherMobileNo1, registrationModel.SchoolId, 4, "");
                 }
             }
             return result;
