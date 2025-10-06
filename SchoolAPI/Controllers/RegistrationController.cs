@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
+using SchoolAPI.Models.Common;
 using SchoolAPI.Models.Registration;
 using SchoolAPI.Repositories.RegistrationRepository;
 using SchoolAPI.Services.RegistrationService;
@@ -133,5 +134,104 @@ namespace SchoolAPI.Controllers
             }
 
         }
+        [HttpGet]
+        [Route("GetRegistrationByRegNo")]
+        public async Task<IActionResult> GetRegistrationByRegNo(int schoolId, int regNo)
+        {
+            var result = await _registrationService.StudentRegistrationByRegNoAsync(schoolId, regNo);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound("No registrations found.");
+            }
+        }
+        [HttpPost]
+        [Route("DeleteRegistrationByRegNo")]
+        public async Task<IActionResult> DeleteRegistrationByRegNo([FromBody] int schoolId, [FromBody] int regNo)
+        {
+            bool result = await _registrationRepository.DeleteRegRecordAsync(schoolId, regNo);
+            if (result)
+            {
+                return Ok(new { Message = "Registration record deleted successfully", Status = true });
+            }
+            else
+            {
+                return BadRequest(new { Message = "Failed to delete registration record", Status = false });
+            }
+        }
+
+        [HttpPost]
+        [Route("UpdateRegistrationByRegNo")]
+        public async Task<IActionResult> UpdateRegistrationByRegNo(int schoolId, int regNo, string status, string remark, int userId)
+        {
+            bool result = await _registrationRepository.UpdateRegistrationStatusAsync(schoolId, regNo, status, remark, userId);
+            if (result)
+            {
+                return Ok(new { Message = "Registration status updated successfully", Status = true });
+            }
+            else
+            {
+                return BadRequest(new { Message = "Failed to update registration status", Status = false });
+            }
+        }
+
+        [Route("SaveEnquiry")]
+        [HttpPost]
+        public async Task<IActionResult> SaveEnquiry(EnquiryM enquiry)
+        {
+            bool result = await _registrationRepository.SaveEnquiryAsync(enquiry).ConfigureAwait(false);
+            if(result)
+                return Ok(new { Message = "Enquiry saved successfully", Status = true });
+            else
+                return Ok(new { Message = "Failed to save enquiry", Status = false });
+        }
+
+        [Route("GetEnquiry")]
+        [HttpGet]
+        public async Task<IActionResult> GetEnquiry(int schoolId)
+        {
+            var result = await _registrationService.GetEnquiriesAsync(schoolId, "online");
+            if (result != null)
+                return Ok(new { Message = result, Status = true });
+            else
+                return Ok(new { Status = false });
+        }
+
+        [HttpGet]
+        [Route("GetEnquiryById")]
+        public async Task<IActionResult> GetEnquiryById(int schoolId, int enquiryId)
+        {
+            var result = await _registrationService.GetEnquiryByIdAsync(schoolId, enquiryId);
+            if (result != null)
+                return Ok(new { Data = result, Status = true });
+            else
+                return Ok(new { Status = false });
+        }
+
+        [Route("UpdateEnquiry")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateEnquiry(int enquiryId)
+        {
+           bool result = await _registrationRepository.UpdateEnquiriesAsync(enquiryId).ConfigureAwait(false);
+            if (result)
+                return Ok(new { Message = "Enquiry updated successfully", Status = true });
+            else
+                return Ok(new { Message = "Failed to update enquiry", Status = false });
+        }
+
+        [Route("DeleteEnquiry")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteEnquiry(int enquiryId)
+        {
+            bool result = await _registrationRepository.DeleteOnlineEnquiryAsync(enquiryId).ConfigureAwait(false);
+            if(result)
+                return Ok(new { Message = "Enquiry deleted successfully", Status = true });
+            else
+                return Ok(new { Message = "Failed to delete enquiry", Status = false });
+        }
+
     }
 }

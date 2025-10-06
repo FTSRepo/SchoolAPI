@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using SchoolAPI.Infrastructure.Factory;
+using SchoolAPI.Models.Common;
 using SchoolAPI.Models.Registration;
 using System.Data;
 
@@ -8,7 +9,7 @@ namespace SchoolAPI.Repositories.RegistrationRepository
     public class RegistrationRepository(IDbConnectionFactory dbConnectionFactory) : IRegistrationRepository
     {
         private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
-    
+
         public async Task<DataTable> BindCategoryDropdownsAsync()
         {
             var dt = new DataTable();
@@ -216,6 +217,176 @@ namespace SchoolAPI.Repositories.RegistrationRepository
             return dataTable;
         }
 
+        public async Task<bool> DeleteRegRecordAsync(int id, int schoolId)
+        {
+            using (var connection = _dbConnectionFactory.CreateConnection())
+            using (var command = new SqlCommand("usp_delete_StudentRegRecord", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddRange(new[]
+                {
+                    new SqlParameter("@Id", id),
+                    new SqlParameter("@SchoolId", schoolId),
+                    new SqlParameter
+                    {
+                        ParameterName = "@Msg",
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 100,
+                        Direction = ParameterDirection.Output
+                    }
+                });
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+                string message = command.Parameters["@Msg"].Value?.ToString();
+                return !string.IsNullOrEmpty(message) && message.Equals("Success", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        public async Task<bool> UpdateRegistrationStatusAsync(int regNo, int schoolId, string status, string remark, int userId)
+        {
+            using (var connection = _dbConnectionFactory.CreateConnection())
+            using (var command = new SqlCommand("USP_UStudentRegistrationDetails", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddRange(new[]
+                {
+                    new SqlParameter("@SchoolId", schoolId),
+                    new SqlParameter("@RegNo", regNo),
+                    new SqlParameter("@Status", status),
+                    new SqlParameter("@Remark", remark ?? (object)DBNull.Value),
+                    new SqlParameter("@UserId", userId)
+                });
+
+                await connection.OpenAsync();
+                int rowsAffected = await command.ExecuteNonQueryAsync();
+
+                // return true if the SP updated at least 1 row
+                return rowsAffected > 0;
+            }
+        }
+        public async Task<bool> UpdateEnquiriesAsync(int id)
+        {
+            using (var connection = _dbConnectionFactory.CreateConnection())
+            using (var command = new SqlCommand("usp_UpdateEnquiry", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter("@Id", id));
+                var outputParam = new SqlParameter("@Msg", SqlDbType.VarChar, 100)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                command.Parameters.Add(outputParam);
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+
+                // success if SP returns "SUCCESS"
+                var result = outputParam.Value?.ToString();
+                return !string.IsNullOrEmpty(result) &&
+                       result.Equals("SUCCESS", StringComparison.OrdinalIgnoreCase);
+
+
+            }
+        }
+        public async Task<bool> DeleteOnlineEnquiryAsync(int enquiryId)
+        {
+            using (var connection = _dbConnectionFactory.CreateConnection())
+            using (var command = new SqlCommand("usp_deleteOnlineEnquiry", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter("@EnquiryId", enquiryId));
+
+                var outputParam = new SqlParameter("@Msg", SqlDbType.VarChar, 100)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                command.Parameters.Add(outputParam);
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+
+                // interpret SP output -> "SUCCESS" = true, else false
+                var result = outputParam.Value?.ToString();
+                return !string.IsNullOrEmpty(result) &&
+                       result.Equals("SUCCESS", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+        public async Task<bool> SaveEnquiryAsync(EnquiryM enquiryM)
+        {
+            using (SqlConnection conn = _dbConnectionFactory.CreateConnection())
+            using (SqlCommand cmd = new SqlCommand("usp_saveEnquiry", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Input parameters
+                cmd.Parameters.AddWithValue("@SchoolId", enquiryM.SchoolId);
+                cmd.Parameters.AddWithValue("@Name", enquiryM.Name ?? string.Empty);
+                cmd.Parameters.AddWithValue("@Contact", enquiryM.Contact ?? string.Empty);
+                cmd.Parameters.AddWithValue("@Email", enquiryM.Email ?? string.Empty);
+                cmd.Parameters.AddWithValue("@Message", enquiryM.Message ?? string.Empty);
+                cmd.Parameters.AddWithValue("@RequestType", enquiryM.EnquiryType ?? string.Empty);
+
+                // Output parameter
+                var outputParam = new SqlParameter("@Msg", SqlDbType.VarChar, 100)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                cmd.Parameters.Add(outputParam);
+
+                await conn.OpenAsync();
+                await cmd.ExecuteNonQueryAsync();
+
+                var result = outputParam.Value?.ToString();
+                return !string.IsNullOrEmpty(result) &&
+                       result.Equals("SUCCESS", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+        public async Task<DataTable> GetEnquiriesAsync(int schoolId, string? requestType)
+        {
+            using var conn = _dbConnectionFactory.CreateConnection();
+            using var cmd = new SqlCommand("usp_getEnquiries", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@SchoolId", schoolId);
+            cmd.Parameters.AddWithValue("@requestType", string.IsNullOrEmpty(requestType) ? DBNull.Value : requestType);
+
+            var dt = new DataTable();
+
+            await conn.OpenAsync();
+            using (var reader = await cmd.ExecuteReaderAsync())
+            {
+                dt.Load(reader);
+            }
+
+            return dt;
+        }
+        public async Task<DataTable> GetEnquiryByIdAsync(int schoolId, int enquiryId)
+        {
+            using var conn = _dbConnectionFactory.CreateConnection();
+            using var cmd = new SqlCommand("usp_getEnquiryById", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@SchoolId", schoolId);
+            cmd.Parameters.AddWithValue("@enquiryId", enquiryId);
+
+            var dt = new DataTable();
+
+            await conn.OpenAsync();
+            using (var reader = await cmd.ExecuteReaderAsync())
+            {
+                dt.Load(reader);
+            }
+
+            return dt;
+        }
 
     }
 }

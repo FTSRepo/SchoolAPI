@@ -11,8 +11,6 @@ namespace SchoolAPI.Repositories.CommonRepository
         Task<DataTable> GetHoliDaysAsync(int schoolId);
         Task<DataTable> GetStaffProfileAsync(int schoolId, int staffId);
         Task<DataTable> GetStudentProfileAsync(int schoolId, int studentId);
-        Task<string> SaveEnquiryAsync(EnquiryM enquiry);
-        Task<string> UpdateEnqiriesAsync(int enquiryId);
         Task<DataTable> GetStudentsBirthdayAsync(int schoolId, int sessionId, int classId, int sectionId);
         Task<DataTable> GetStudentonLeavetodayAsync(int schoolId, int sessionId, int classId, int sectionId);
         Task<DataTable> GetAPPVersionAsync(int schoolId);

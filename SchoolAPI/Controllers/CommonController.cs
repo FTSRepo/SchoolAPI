@@ -181,40 +181,6 @@ public class CommonController : ControllerBase
         }
     }
 
-    [Route("api/SaveEnquiry")]
-    [HttpPost]
-    public async Task<IActionResult> SaveEnquiry(EnquiryM enquiry)
-    {
-        var result = await _commns.SaveEnquiryAsync(enquiry).ConfigureAwait(false);
-        if (!string.IsNullOrEmpty(result))
-            return Ok(new { Message = result, Status = true });
-        else
-            return Ok(new { Status = false });
-
-    }
-
-    [Route("api/GetEnquiry")]
-    [HttpGet]
-    public async Task<IActionResult> GetEnquiry(EnquiryM enquiry)
-    {
-        var result = await _commns.SaveEnquiryAsync(enquiry);
-        if (!string.IsNullOrEmpty(result))
-            return Ok(new { Message = result, Status = true });
-        else
-            return Ok(new { Status = false });
-    }
-
-    [Route("api/UpdateEnquiry")]
-    [HttpPost]
-    public async Task<IActionResult> UpdateEnquiry(int enquiryId)
-    {
-        var result = await _commns.UpdateEnqiriesAsync(enquiryId).ConfigureAwait(false);
-        if (!string.IsNullOrEmpty(result))
-            return Ok(new { Message = result, Status = true });
-        else
-            return Ok(new { Status = false });
-    }
-
     [Route("api/GetStudentsBirthday")]
     [HttpGet]
     public async Task<IActionResult> GetStudentsBirthday(int SchoolId, int SessionId, int ClassId, int SectionId)

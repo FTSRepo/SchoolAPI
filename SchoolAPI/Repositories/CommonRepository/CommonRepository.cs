@@ -174,64 +174,6 @@ namespace SchoolAPI.Repositories.CommonRepository
             return dt;
         }
 
-        public async Task<string> SaveEnquiryAsync(EnquiryM enquiryM)
-        {
-            string result = string.Empty;
-            using (SqlConnection conn = _dbConnectionFactory.CreateConnection())
-            using (SqlCommand cmd = new SqlCommand("usp_saveEnquiry", conn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                // Input parameters
-                cmd.Parameters.AddWithValue("@SchoolId", enquiryM.SchoolId);
-                cmd.Parameters.AddWithValue("@Name", enquiryM.Name ?? string.Empty);
-                cmd.Parameters.AddWithValue("@Contact", enquiryM.Contact ?? string.Empty);
-                cmd.Parameters.AddWithValue("@Email", enquiryM.Email ?? string.Empty);
-                cmd.Parameters.AddWithValue("@Message", enquiryM.Message ?? string.Empty);
-                cmd.Parameters.AddWithValue("@RequestType", enquiryM.EnquiryType ?? string.Empty);
-
-                // Output parameter
-                var outputParam = new SqlParameter("@Msg", SqlDbType.VarChar, 100)
-                {
-                    Direction = ParameterDirection.Output
-                };
-                cmd.Parameters.Add(outputParam);
-
-                await conn.OpenAsync();
-                await cmd.ExecuteNonQueryAsync();
-
-                result = outputParam.Value?.ToString() ?? string.Empty;
-            }
-
-            return result;
-        }
-        public async Task<string> UpdateEnquiriesAsync(int id)
-        {
-            string result = string.Empty;
-            using (SqlConnection conn = _dbConnectionFactory.CreateConnection())
-            using (SqlCommand cmd = new SqlCommand("usp_UpdateEnquiry", conn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                // Input parameter
-                cmd.Parameters.AddWithValue("@Id", id);
-
-                // Output parameter
-                var outputParam = new SqlParameter("@Msg", SqlDbType.VarChar, 100)
-                {
-                    Direction = ParameterDirection.Output
-                };
-                cmd.Parameters.Add(outputParam);
-
-                await conn.OpenAsync();
-                await cmd.ExecuteNonQueryAsync();
-
-                result = outputParam.Value?.ToString() ?? string.Empty;
-            }
-
-            return result;
-        }
-
         public async Task<DataTable> GetStudentsBirthdayAsync(int schoolId, int sessionId, int classId, int sectionId)
         {
             var dataTable = new DataTable();
@@ -695,11 +637,7 @@ namespace SchoolAPI.Repositories.CommonRepository
 
             return msgParam.Value?.ToString() ?? string.Empty;
         }
-
-        public Task<string> UpdateEnqiriesAsync(int enquiryId)
-        {
-            throw new NotImplementedException();
-        }
+         
 
         public Task<DataTable> GetStudentonLeavetodayAsync(int schoolId, int sessionId, int classId, int sectionId)
         {

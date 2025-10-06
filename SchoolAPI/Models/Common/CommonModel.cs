@@ -157,6 +157,8 @@
         public string Message { get; set; }
         public string EnquiryType { get; set; }
         public int SchoolId { get; set; }
+        public string EnquiryDate { get; set; }
+        public int EnquiryId { get; set; }
     }
 
     public class APPVersionM

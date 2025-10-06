@@ -103,14 +103,7 @@ namespace SchoolAPI.Services.CommonService
             }
             return studentProfile;
         }
-        public async Task<string> SaveEnquiryAsync(EnquiryM enquiry)
-        {
-           return await _commonRepository.SaveEnquiryAsync(enquiry).ConfigureAwait(false);
-        }
-        public async Task<string> UpdateEnqiriesAsync(int enquiryId)
-        {
-           return await _commonRepository.UpdateEnqiriesAsync(enquiryId).ConfigureAwait(false);
-        }
+
         public async Task<List<StudentBirthday>> GetStudentsBirthdayAsync(int schoolId, int sessionId, int classId, int sectionId)
         {
             DataTable dt = await _commonRepository.GetStudentsBirthdayAsync(schoolId, sessionId, classId, sectionId).ConfigureAwait(false);
