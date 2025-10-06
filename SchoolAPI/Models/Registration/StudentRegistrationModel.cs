@@ -13,8 +13,8 @@
         public DateTime Dob { get; set; }
         public string? BirthPlace { get; set; }
         public int IsPermanentAddressSame { get; set; }
-// Student Address (Same)
-public string? AddressLine1S { get; set; }
+        // Student Address (Same)
+        public string? AddressLine1S { get; set; }
         public string? AddressLine2S { get; set; }
         public int CountryS { get; set; }
         public int StateP { get; set; }
@@ -71,10 +71,7 @@ public string? AddressLine1S { get; set; }
         public int Category { get; set; }
         public int Religion { get; set; }
         public int SiblingsStudentId { get; set; }
-
-}
-
-
+    }
     public class StudentRegistrationModelRes
     {
         public int Regno { get; set; }
