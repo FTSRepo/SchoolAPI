@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using SchoolAPI.Models.Common;
@@ -92,7 +93,8 @@ namespace SchoolAPI.Controllers
 
         [HttpPost]
         [Route("saveRegistration")]
-        public async Task<IActionResult> SaveRegistration([FromBody] StudentRegistrationModel studentRegistrationModel)
+        [AllowAnonymous]
+        public async Task<IActionResult> SaveRegistration([FromBody] StudentRegistrationModelReq studentRegistrationModel)
         {
             string result = "", sendSMS = "";
 
@@ -150,7 +152,7 @@ namespace SchoolAPI.Controllers
         }
         [HttpPost]
         [Route("DeleteRegistrationByRegNo")]
-        public async Task<IActionResult> DeleteRegistrationByRegNo([FromBody] int schoolId, [FromBody] int regNo)
+        public async Task<IActionResult> DeleteRegistrationByRegNo(int schoolId,int regNo)
         {
             bool result = await _registrationRepository.DeleteRegRecordAsync(schoolId, regNo);
             if (result)

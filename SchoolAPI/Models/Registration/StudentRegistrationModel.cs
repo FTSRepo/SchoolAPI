@@ -2,24 +2,31 @@
 {
     public class StudentRegistrationModelReq
     {
+        public int Communication { get; set; }
+        public int RegNo { get; set; }
         public string? Registration { get; set; }
-        public DateTime DateofRegistration { get; set; }
+        public DateTime DateOfRegistration { get; set; }
         public int Class { get; set; }
-        public string? Firstname { get; set; }
+        public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
         public DateTime Dob { get; set; }
         public string? BirthPlace { get; set; }
-        public int RadioValue { get; set; }
-        public string? AddressLine1S { get; set; }
+        public int IsPermanentAddressSame { get; set; }
+// Student Address (Same)
+public string? AddressLine1S { get; set; }
         public string? AddressLine2S { get; set; }
         public int CountryS { get; set; }
-        public string? Statep { get; set; }
-        public string? Cityp { get; set; }
-        public int Pincodep { get; set; }
+        public int StateP { get; set; }
+        public string? CityP { get; set; }
+        public int PincodeP { get; set; }
+
+        // Contact Info
         public string? FatherMobileNumber { get; set; }
-        public string? MobileNo { get; set; }
-        public string? PresentDistance { get; set; }
+        public string? MobileNoP { get; set; }
+        public string? EmailId { get; set; }
+
+        // Permanent / Physical Address
         public string? AddressLine1Ph { get; set; }
         public string? AddressLinePh { get; set; }
         public int CountryPh { get; set; }
@@ -27,17 +34,16 @@
         public string? CityPh { get; set; }
         public int PinCodePh { get; set; }
         public int Distance { get; set; }
-        public int Communication { get; set; } = 1; // 1-Post, 2-SMS, 3-Both
 
-        // Father details
+        // Father Details
         public string? FirstNameFather { get; set; }
         public string? MiddleNameFather { get; set; }
         public string? LastNameFather { get; set; }
         public string? EducationQualificationFather { get; set; }
         public string? ProfessionalQualificationFather { get; set; }
-        public string? OccupationFather { get; set; }
+        public string? Occupation { get; set; }
 
-        // Mother details
+        // Mother Details
         public string? FirstNameMother { get; set; }
         public string? MiddleNameMother { get; set; }
         public string? LastNameMother { get; set; }
@@ -45,23 +51,29 @@
         public string? ProfessionalQualificationMother { get; set; }
         public string? OccupationMother { get; set; }
 
+        // Audit Info
         public string? CreatedBy { get; set; }
-        public string? ModifiedBy { get; set; }
+
+        // School and Session Info
         public int SchoolId { get; set; }
         public int SessionId { get; set; }
 
-        public string? FatherMobileNo1 { get; set; }
+        // Additional Contact Info
+        public string? FatherMobile1 { get; set; }
         public string? Mobile1 { get; set; }
+
+        // Other Fields
+        public int ReciptNo { get; set; }
         public string? AadharNo { get; set; }
-        public string? RegFee { get; set; }   
+        public bool AdmDone { get; set; }
+        public int RegFee { get; set; }
         public int BloodGroup { get; set; }
         public int Category { get; set; }
         public int Religion { get; set; }
         public int SiblingsStudentId { get; set; }
 
-        // OUTPUT param from SP
-        public string? Msg { get; set; }
-    }
+}
+
 
     public class StudentRegistrationModelRes
     {

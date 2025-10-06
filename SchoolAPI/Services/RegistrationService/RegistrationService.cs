@@ -61,7 +61,7 @@ namespace SchoolAPI.Services.RegistrationService
         public async Task<string> SendSMS(StudentRegistrationModelReq registrationModel)
         {
             string result = "";
-            if (Regex.Match(registrationModel.FatherMobileNo1.Trim(), @"^[6789]\d{9}$").Success)
+            if (Regex.Match(registrationModel.FatherMobile1.Trim(), @"^[6789]\d{9}$").Success)
             {
                 if (Convert.ToInt32( await _commonService.GetSMSCreditAsync(registrationModel.SchoolId)) > 0)
                 {
@@ -69,8 +69,8 @@ namespace SchoolAPI.Services.RegistrationService
                     List<string> smsresponse = new List<string>();
                     DataTable templateDt = await _commonService.GetSMSTemaplateDescAsync(registrationModel.SchoolId, 4);
                     template = templateDt.Rows[0]["TemplateDesc"].ToString();
-                    template = template == null ? "R/p Resgistration for your ward-, '" + registrationModel.Firstname + "' is completed successfully with Reg No.'" + registrationModel.Registration + "' on Date:'" + registrationModel.DateofRegistration.ToString() + "'" : template.Replace("@", registrationModel.Firstname).Replace("#", registrationModel.DateofRegistration.ToString()).Replace("$", registrationModel.Registration);
-                    result = await _commonService.FTSMessanger(template, registrationModel.FatherMobileNo1, registrationModel.SchoolId, 4, "");
+                    template = template == null ? "R/p Resgistration for your ward-, '" + registrationModel.FirstName + "' is completed successfully with Reg No.'" + registrationModel.Registration + "' on Date:'" + registrationModel.DateOfRegistration.ToString() + "'" : template.Replace("@", registrationModel.FirstName).Replace("#", registrationModel.DateOfRegistration.ToString()).Replace("$", registrationModel.Registration);
+                    result = await _commonService.FTSMessanger(template, registrationModel.FatherMobile1, registrationModel.SchoolId, 4, "");
                 }
             }
             return result;
