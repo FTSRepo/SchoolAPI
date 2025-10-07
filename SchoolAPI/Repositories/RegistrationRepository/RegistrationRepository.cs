@@ -206,7 +206,7 @@ namespace SchoolAPI.Repositories.RegistrationRepository
 
             return result;
         }
-        public async Task<DataTable> StudentRegistrationAllRecordAsync(int schoolId, int regno, string? type = null, string requestType = "")
+        public async Task<DataTable> StudentRegistrationAllRecordAsync(int schoolId, int regno, string? type = null, string requestType = null)
         {
             var dataTable = new DataTable();
 
@@ -234,7 +234,7 @@ namespace SchoolAPI.Repositories.RegistrationRepository
             return dataTable;
         }
 
-        public async Task<bool> DeleteRegRecordAsync(int id, int schoolId)
+        public async Task<bool> DeleteRegRecordAsync(int schoolId, int regNo )
         {
             using (var connection = _dbConnectionFactory.CreateConnection())
             using (var command = new SqlCommand("usp_delete_StudentRegRecord", connection))
@@ -243,7 +243,7 @@ namespace SchoolAPI.Repositories.RegistrationRepository
 
                 command.Parameters.AddRange(new[]
                 {
-                    new SqlParameter("@Id", id),
+                    new SqlParameter("@Id", regNo),
                     new SqlParameter("@SchoolId", schoolId),
                     new SqlParameter
                     {
@@ -260,7 +260,7 @@ namespace SchoolAPI.Repositories.RegistrationRepository
             }
         }
 
-        public async Task<bool> UpdateRegistrationStatusAsync(int regNo, int schoolId, string status, string remark, int userId)
+        public async Task<bool> UpdateRegistrationStatusAsync(int schoolId, int regNo, string status, string remark, int userId)
         {
             using (var connection = _dbConnectionFactory.CreateConnection())
             using (var command = new SqlCommand("USP_UStudentRegistrationDetails", connection))

@@ -87,9 +87,9 @@ namespace SchoolAPI.Services.RegistrationService
             return studentRegistrations;
         }
          
-        public async Task<StudentRegistrationModelRes?> StudentRegistrationByRegNoAsync(int regNo, int schoolId)
+        public async Task<StudentRegistrationModelRes?> StudentRegistrationByRegNoAsync(int schoolId, int regNo)
         {
-            DataTable dt = await _registrationRepository.StudentRegistrationAllRecordAsync(schoolId, regNo, null, "");
+            DataTable dt = await _registrationRepository.StudentRegistrationAllRecordAsync(schoolId, regNo, null, null);
 
             if (dt.Rows.Count == 0)
                 return null;

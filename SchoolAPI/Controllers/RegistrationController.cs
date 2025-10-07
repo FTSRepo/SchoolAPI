@@ -18,9 +18,10 @@ namespace SchoolAPI.Controllers
 
         [HttpGet]
         [Route("GetCategory")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCategory()
         {
-            var result = _registrationService.BindCategoryDropdownsAsync();
+            var result = await _registrationService.BindCategoryDropdownsAsync().ConfigureAwait(false);
             if (result != null)
             {
                 return Ok(result);
@@ -33,6 +34,7 @@ namespace SchoolAPI.Controllers
 
         [HttpGet]
         [Route("GetNewRegNumberAsync")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetNewRegNumberAsync(int SchoolId)
         {
             string admissionNumber = await _registrationService.GetNewRegNumberAsync(SchoolId);
@@ -48,6 +50,7 @@ namespace SchoolAPI.Controllers
 
         [HttpGet]
         [Route("GetReligion")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetReligion()
         {
             List<ReligionM> result = await _registrationService.BindReligionDropdownsAsync();
@@ -63,6 +66,7 @@ namespace SchoolAPI.Controllers
 
         [HttpGet]
         [Route("GetBloodGroup")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetBloodGroup()
         {
             List<BloodGroupDto> result = await _registrationRepository.GetBloodGroupAsync();
@@ -78,6 +82,7 @@ namespace SchoolAPI.Controllers
 
         [HttpGet]
         [Route("GetStates")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetStates()
         {
             List<StateDto> result = await _registrationRepository.GetStates();
@@ -93,6 +98,7 @@ namespace SchoolAPI.Controllers
 
         [HttpPost]
         [Route("saveRegistration")]
+        [AllowAnonymous]
         public async Task<IActionResult> SaveRegistration([FromBody] StudentRegistrationModelReq studentRegistrationModel)
         {
             string result = "", sendSMS = "";
@@ -122,6 +128,7 @@ namespace SchoolAPI.Controllers
 
         [HttpGet]
         [Route("GetRegistration")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetRegistration(int schoolId)
         {
             var result = await _registrationService.StudentRegistrationAllRecordAsync(schoolId, 0, "All", null);
@@ -137,6 +144,7 @@ namespace SchoolAPI.Controllers
         }
         [HttpGet]
         [Route("GetRegistrationByRegNo")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetRegistrationByRegNo(int schoolId, int regNo)
         {
             var result = await _registrationService.StudentRegistrationByRegNoAsync(schoolId, regNo);
@@ -151,12 +159,13 @@ namespace SchoolAPI.Controllers
         }
         [HttpPost]
         [Route("DeleteRegistrationByRegNo")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteRegistrationByRegNo(int schoolId,int regNo)
         {
             bool result = await _registrationRepository.DeleteRegRecordAsync(schoolId, regNo);
-            if (result)
+            if (result !=null)
             {
-                return Ok(new { Message = "Registration record deleted successfully", Status = true });
+                return Ok(new { Message = "Delete Registration Number Successfull", Status = true });
             }
             else
             {
@@ -166,6 +175,7 @@ namespace SchoolAPI.Controllers
 
         [HttpPost]
         [Route("UpdateRegistrationByRegNo")]
+        [AllowAnonymous]
         public async Task<IActionResult> UpdateRegistrationByRegNo(int schoolId, int regNo, string status, string remark, int userId)
         {
             bool result = await _registrationRepository.UpdateRegistrationStatusAsync(schoolId, regNo, status, remark, userId);
@@ -179,19 +189,21 @@ namespace SchoolAPI.Controllers
             }
         }
 
-        [Route("SaveEnquiry")]
         [HttpPost]
+        [Route("SaveEnquiry")]        
+        [AllowAnonymous]
         public async Task<IActionResult> SaveEnquiry(EnquiryM enquiry)
         {
             bool result = await _registrationRepository.SaveEnquiryAsync(enquiry).ConfigureAwait(false);
-            if(result)
+            if(result != null)
                 return Ok(new { Message = "Enquiry saved successfully", Status = true });
             else
                 return Ok(new { Message = "Failed to save enquiry", Status = false });
         }
 
-        [Route("GetEnquiry")]
         [HttpGet]
+        [Route("GetEnquiry")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetEnquiry(int schoolId)
         {
             var result = await _registrationService.GetEnquiriesAsync(schoolId, "online");
@@ -203,6 +215,7 @@ namespace SchoolAPI.Controllers
 
         [HttpGet]
         [Route("GetEnquiryById")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetEnquiryById(int schoolId, int enquiryId)
         {
             var result = await _registrationService.GetEnquiryByIdAsync(schoolId, enquiryId);
@@ -212,23 +225,25 @@ namespace SchoolAPI.Controllers
                 return Ok(new { Status = false });
         }
 
-        [Route("UpdateEnquiry")]
         [HttpPost]
+        [Route("UpdateEnquiry")]        
+        [AllowAnonymous]
         public async Task<IActionResult> UpdateEnquiry(int enquiryId)
         {
            bool result = await _registrationRepository.UpdateEnquiriesAsync(enquiryId).ConfigureAwait(false);
-            if (result)
+            if (result !=null)
                 return Ok(new { Message = "Enquiry updated successfully", Status = true });
             else
                 return Ok(new { Message = "Failed to update enquiry", Status = false });
         }
 
-        [Route("DeleteEnquiry")]
         [HttpPost]
+        [Route("DeleteEnquiry")]        
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteEnquiry(int enquiryId)
         {
             bool result = await _registrationRepository.DeleteOnlineEnquiryAsync(enquiryId).ConfigureAwait(false);
-            if(result)
+            if(result !=null)
                 return Ok(new { Message = "Enquiry deleted successfully", Status = true });
             else
                 return Ok(new { Message = "Failed to delete enquiry", Status = false });

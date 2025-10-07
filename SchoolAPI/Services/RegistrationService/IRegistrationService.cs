@@ -1,6 +1,7 @@
-﻿using System.Data;
-using SchoolAPI.Models.Common;
+﻿using SchoolAPI.Models.Common;
 using SchoolAPI.Models.Registration;
+using System.Data;
+using System.Text.RegularExpressions;
 
 namespace SchoolAPI.Services.RegistrationService
 {
@@ -12,7 +13,7 @@ namespace SchoolAPI.Services.RegistrationService
         Task<string> SaveRegistrationAsync(StudentRegistrationModelReq objstudentregistration);
         Task<string> SendSMS(StudentRegistrationModelReq registrationModel);
         Task<List<StudentRegistrationModelRes>> StudentRegistrationAllRecordAsync(int schoolId, int regno, string? type = null, string requestType = "");
-        Task<StudentRegistrationModelRes?> StudentRegistrationByRegNoAsync(int regNo, int schoolId);
+        Task<StudentRegistrationModelRes?> StudentRegistrationByRegNoAsync(int schoolId, int regNo );
         Task<List<EnquiryM>> GetEnquiriesAsync(int schoolId, string requestType);
         Task<EnquiryM> GetEnquiryByIdAsync(int schoolId, int enquiryId);
     }
