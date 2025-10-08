@@ -28,8 +28,8 @@ namespace SchoolAPI.Repositories.MessageRepository
                 MessageResponse response = new MessageResponse
                 {
                     SchoolId = reader["SchoolId"] != DBNull.Value ? Convert.ToInt32(reader["SchoolId"]) : 0,
-                    MessageTxt = reader["Message"]?.ToString(),
-                    Date = reader["SentDate"] != DBNull.Value ? Convert.ToDateTime(reader["SentDate"]) : DateTime.MinValue,
+                    MessageTxt = reader["messageTxt"]?.ToString(),
+                    Date = reader["date"] != DBNull.Value ? Convert.ToDateTime(reader["date"]) : DateTime.MinValue,
                 };
                 messages.Add(response);
             }
