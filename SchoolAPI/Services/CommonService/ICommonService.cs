@@ -6,7 +6,7 @@ namespace SchoolAPI.Services.CommonService
     public interface ICommonService
     {
         Task<List<ClassM>> GetClassByTeacherAsync(int schoolId, int userId);
-        Task<List<SectionM>> GetSectionAsync(int classId, int schoolId, int userId = 0);
+        Task<List<SectionM>> GetSectionAsync(int schoolId, int classId, int userId = 0);
         Task<List<SubjectM>> GetSubjectListAsync(int schoolId);
         Task<List<Holidays>> GetHolidaysAsync(int schoolId);
         Task<StaffProfile> GetStaffProfileAsync(int schoolId, int userId);

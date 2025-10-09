@@ -25,8 +25,10 @@ public class CommonController : ControllerBase
         _paymentgatewayService = paymentgatewayService;
     }
 
-    [Route("api/GetClassList")]
+    
     [HttpPost]
+    [Route("api/GetClassList")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetClassList(Filters filters)
     {
         var result = await _commns.GetClassByTeacherAsync(filters.SchoolId, filters.UserId);
@@ -36,8 +38,9 @@ public class CommonController : ControllerBase
             return Ok(new { Status = false });
     }
 
-    [Route("api/GetSectionList")]
     [HttpPost]
+    [Route("api/GetSectionList")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetSectionList(Filters filters)
     {
         var result = await _commns.GetSectionAsync(filters.SchoolId, filters.ClassId, filters.UserId).ConfigureAwait(false);
@@ -51,8 +54,9 @@ public class CommonController : ControllerBase
         }
     }
 
-    [Route("api/GetSubjectList")]
     [HttpGet]
+    [Route("api/GetSubjectList")]    
+    [AllowAnonymous]
     public async Task<IActionResult> GetSubjectList(int SchoolId)
     {
         var result = await _commns.GetSubjectListAsync(SchoolId).ConfigureAwait(false);
@@ -66,9 +70,10 @@ public class CommonController : ControllerBase
         }
     }
 
-    [Route("api/upload")]
     [HttpPost]
+    [Route("api/upload")]    
     [HttpPost("upload")]
+    [AllowAnonymous]
     public async Task<IActionResult> PostFile(List<IFormFile> files)
     {
         if (files == null || files.Count == 0)
@@ -102,10 +107,10 @@ public class CommonController : ControllerBase
         return Ok(fileNames);
     }
 
-
     [HttpGet]
     [Route("api/GetFile")]
     [HttpGet("download/{fileName}")]
+    [AllowAnonymous]
     public IActionResult GetFile(string fileName)
     {
         if (string.IsNullOrEmpty(fileName))
@@ -135,9 +140,9 @@ public class CommonController : ControllerBase
         return contentType;
     }
 
-
-    [Route("api/GetHolidays")]
     [HttpGet]
+    [Route("api/GetHolidays")]
+    [AllowAnonymous]    
     public async Task<IActionResult> GetHolidays(int SchoolId)
     {
         var result = await _commns.GetHolidaysAsync(SchoolId).ConfigureAwait(false);
@@ -151,8 +156,9 @@ public class CommonController : ControllerBase
         }
     }
 
-    [Route("api/GetStaffProfile")]
     [HttpGet]
+    [Route("api/GetStaffProfile")]
+    [AllowAnonymous]    
     public async Task<IActionResult> GetStaffProfile(int SchoolId, int userId)
     {
         var result = await _commns.GetStaffProfileAsync(SchoolId, userId).ConfigureAwait(false);
@@ -166,8 +172,9 @@ public class CommonController : ControllerBase
         }
     }
 
-    [Route("api/GetStudentProfile")]
     [HttpGet]
+    [Route("api/GetStudentProfile")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetStudentProfile(int SchoolId, int userId)
     {
         var result = await _commns.GetStudentProfileAsync(SchoolId, userId).ConfigureAwait(false);
@@ -181,8 +188,9 @@ public class CommonController : ControllerBase
         }
     }
 
-    [Route("api/GetStudentsBirthday")]
     [HttpGet]
+    [Route("api/GetStudentsBirthday")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetStudentsBirthday(int SchoolId, int SessionId, int ClassId, int SectionId)
     {
         List<StudentBirthday> result = await _commns.GetStudentsBirthdayAsync(SchoolId, SessionId, ClassId, SectionId);
@@ -192,8 +200,9 @@ public class CommonController : ControllerBase
             return Ok(new { Status = false });
     }
 
-    [Route("api/GetStudentOnLeave")]
     [HttpGet]
+    [Route("api/GetStudentOnLeave")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetStudentOnLeave(int SchoolId, int SessionId, int ClassId, int SectionId)
     {
         var result = await _commns.GetStudentonLeavetodayAsync(SchoolId, SessionId, ClassId, SectionId);
@@ -203,8 +212,9 @@ public class CommonController : ControllerBase
             return Ok(new { Status = false });
     }
 
-    [Route("api/GetAPPVersion")]
     [HttpGet]
+    [Route("api/GetAPPVersion")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAPPVersion(int SchoolId)
     {
         var result = await _commns.GetAPPVersionAsync(SchoolId);
@@ -213,8 +223,10 @@ public class CommonController : ControllerBase
         else
             return Ok(new { Status = false });
     }
-    [Route("api/GetStaffOnLeave")]
+
     [HttpGet]
+    [Route("api/GetStaffOnLeave")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetStaffOnLeave(int SchoolId, int SessionId)
     {
         var result = await _commns.GetStaffonLeavetodayAsync(SchoolId, SessionId);
@@ -224,8 +236,9 @@ public class CommonController : ControllerBase
             return Ok(new { Status = false });
     }
 
-    [Route("api/GetStaffBirthDay")]
     [HttpGet]
+    [Route("api/GetStaffBirthDay")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetStaffBirthDay(int SchoolId, int SessionId)
     {
         List<StudentBirthday> result = await _commns.GetStaffsBirthdayAsync(SchoolId, SessionId);
@@ -235,8 +248,9 @@ public class CommonController : ControllerBase
             return Ok(new { Status = false });
     }
 
-    [Route("api/SaveStudentDairy")]
     [HttpPost]
+    [Route("api/SaveStudentDairy")]
+    [AllowAnonymous]
     public async Task<IActionResult> SaveStudentDairy(StudentDairyRequest dairyRequest)
     {
         var result = await _commns.SaveStudentDairyAsync(dairyRequest).ConfigureAwait(false);
@@ -247,8 +261,9 @@ public class CommonController : ControllerBase
 
     }
 
-    [Route("api/GetStudentDairy")]
     [HttpPost]
+    [Route("api/GetStudentDairy")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetStudentDairy(StudentDairyRequest enquiry)
     {
         var result = await _commns.GetStudentDiaryAsync(enquiry);
@@ -259,9 +274,9 @@ public class CommonController : ControllerBase
     }
 
     //Addmin section
-
-    [Route("api/SaveNewsorEvent")]
     [HttpPost]
+    [Route("api/SaveNewsorEvent")]
+    [AllowAnonymous]
     public async Task<IActionResult> SaveNewsorEvent(NewsorEventRequest request)
     {
         var result = await _commns.SaveNewsorEventsAsync(request).ConfigureAwait(false);
@@ -272,8 +287,9 @@ public class CommonController : ControllerBase
 
     }
 
-    [Route("api/GetNewsorEvent")]
     [HttpPost]
+    [Route("api/GetNewsorEvent")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetNewsorEvent(int SchoolId)
     {
         var result = await _commns.GetNewsorEventsAsync(SchoolId);
@@ -283,8 +299,9 @@ public class CommonController : ControllerBase
             return Ok(new { Status = false });
     }
 
-    [Route("api/GetDashBoardData")]
     [HttpGet]
+    [Route("api/GetDashBoardData")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetDashBoardData(int SchoolId, int SessionId)
     {
         DashboardCollectionSummaryResponse response = await _commns.GetDashboardDataAsync(SchoolId, SessionId);
@@ -294,8 +311,9 @@ public class CommonController : ControllerBase
             return Ok(new { Status = false });
     }
 
-    [Route("api/GetCommunicationTemplateName")]
     [HttpGet]
+    [Route("api/GetCommunicationTemplateName")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetCommunicationTemplateName(int SchoolId, int SessionId)
     {  
         var response = await _commns.GetDashboardDataAsync(SchoolId, SessionId);
@@ -304,8 +322,10 @@ public class CommonController : ControllerBase
         else
             return Ok(new { Status = false });
     }
-    [Route("api/GetCommunicationTemplateDesc")] //get template desc by templae Id
+
     [HttpGet]
+    [Route("api/GetCommunicationTemplateDesc")] //get template desc by templae Id
+    [AllowAnonymous]
     public async Task<IActionResult> GetCommunicationTemplateDesc(int SchoolId, int templateId)
     { 
 
@@ -315,8 +335,10 @@ public class CommonController : ControllerBase
         else
             return Ok(new { Status = false });
     }
+
+    [HttpGet]
     [Route("api/GetSMSCredit")]
-    [HttpGet] 
+    [AllowAnonymous]
     public async Task<IActionResult> GetSMSCredit(int SchoolId, int SessionId)
     { 
             string response = await _commns.GetSMSCreditAsync(SchoolId);
@@ -328,8 +350,9 @@ public class CommonController : ControllerBase
 
     }
 
-    [Route("api/SendSMS")]
     [HttpPost]
+    [Route("api/SendSMS")]
+    [AllowAnonymous]
     public async Task<IActionResult> SendSMS(int SchoolId, int SessionId, int ClassId, int SectionId, string TemplateName, string TemplateDesc, int language)
     {
         DataTable dt = await _commns.GetDLTDetailsByTemplateNameAsync(SchoolId, TemplateName);
@@ -381,6 +404,7 @@ public class CommonController : ControllerBase
 
     [HttpPost]
     [Route("api/save-notification")]
+    [AllowAnonymous]
     public async Task<IActionResult> SaveNotificationNew(NotificationRequest notification)
     { 
 
@@ -429,6 +453,7 @@ public class CommonController : ControllerBase
 
     [HttpPost]
     [Route("api/saveFirebaseTocken")]
+    [AllowAnonymous]
     public async Task<IActionResult> SaveFireBaseTocken(FirebaseRequestModel firebaseRequest)
     { 
         try
@@ -451,6 +476,7 @@ public class CommonController : ControllerBase
 
     [HttpPost]
     [Route("api/deleteFirebaseTocken")]
+    [AllowAnonymous]
     public async Task<IActionResult> delteFireBaseTocken(string tocken)
     {
         bool Status = await _commns.DeleteFirebaseTockenAsync(tocken);
@@ -463,8 +489,10 @@ public class CommonController : ControllerBase
             return Ok(new { Status = false, Message = "error while Deleting" });
         }
     }
+    
     [HttpGet]
     [Route("api/PrincipleProfiles")]
+    [AllowAnonymous]
     public async Task<IActionResult> PrincipleProfiles(int SchoolId)
     {
         var result = await _commns.PrincipleProfilesAsync(SchoolId);
@@ -537,7 +565,6 @@ public class CommonController : ControllerBase
             return Ok(new { Status = false, Message = ex.Message });
         }
     }
-
     private async Task<PaymentGatewayOrderResponse> CreateOrderAsync(int registrationFee, string registrationNumber, string keyId, string keySecret)
     {
         var orderResponse = new PaymentGatewayOrderResponse();

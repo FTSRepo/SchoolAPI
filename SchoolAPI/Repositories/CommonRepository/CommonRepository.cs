@@ -40,7 +40,7 @@ namespace SchoolAPI.Repositories.CommonRepository
             return dt;
         }
 
-        public async Task<DataTable> GetSectionAsync(int classId, int schoolId, int userId = 0)
+        public async Task<DataTable> GetSectionAsync(int schoolId, int classId, int userId = 0)
         {
             var dt = new DataTable();
 
@@ -54,10 +54,10 @@ namespace SchoolAPI.Repositories.CommonRepository
 
                 cmd.Parameters.AddRange(new[]
                 {
-            new SqlParameter("@SchoolId", schoolId),
-            new SqlParameter("@ClassId", classId),
-            new SqlParameter("@UserId", userId)
-        });
+                    new SqlParameter("@SchoolId", schoolId),
+                    new SqlParameter("@ClassId", classId),
+                    new SqlParameter("@UserId", userId)
+                });
 
                 await conn.OpenAsync();
 
@@ -136,8 +136,8 @@ namespace SchoolAPI.Repositories.CommonRepository
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(new SqlParameter("@SchoolId", schoolId));
                     cmd.Parameters.Add(new SqlParameter("@StaffId", staffId));
+                    cmd.Parameters.Add(new SqlParameter("@SchoolId", schoolId));                    
 
                     await conn.OpenAsync();
 
@@ -150,7 +150,7 @@ namespace SchoolAPI.Repositories.CommonRepository
 
             return dt;
         }
-        public async Task<DataTable> GetStudentProfileAsync(int schoolId, int studentId)
+        public async Task<DataTable> GetStudentProfileAsync(int schoolId, int userId)
         {
             var dt = new DataTable(); 
             using (SqlConnection conn = _dbConnectionFactory.CreateConnection())
@@ -159,8 +159,8 @@ namespace SchoolAPI.Repositories.CommonRepository
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(new SqlParameter("@SchoolId", schoolId));
-                    cmd.Parameters.Add(new SqlParameter("@StudentId", studentId));
+                    cmd.Parameters.Add(new SqlParameter("@StudentId", userId));
+                    cmd.Parameters.Add(new SqlParameter("@SchoolId", schoolId));                    
 
                     await conn.OpenAsync();
 
