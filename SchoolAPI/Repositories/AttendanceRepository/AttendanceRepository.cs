@@ -21,7 +21,7 @@ namespace SchoolAPI.Repositories.AttendanceRepository
 
             cmd.Parameters.AddRange(new[]
             {
-                new SqlParameter("@SchoolId", schoolId),
+                new SqlParameter("@SchooId", schoolId),
                 new SqlParameter("@SessionId", sessionId),
                 new SqlParameter("@Class", classId),
                 new SqlParameter("@SectionID", sectionId)

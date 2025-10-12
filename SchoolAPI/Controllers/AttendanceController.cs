@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolAPI.Models.Attendance;
 using SchoolAPI.Services.AttendanceService;
@@ -18,6 +19,7 @@ namespace SchoolAPI.Controllers
         }
         [Route("api/GetStudentsList")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> GetStudentsListByClass(AttendanceFilter attendanceFilter)
         {
             var result = await _attendanceService.GetStudentAttendanceAsync(attendanceFilter).ConfigureAwait(false);

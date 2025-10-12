@@ -122,7 +122,7 @@ namespace SchoolAPI.Services.RegistrationService
                 Regno = Convert.ToInt32(dr["Regno"]),
                 Registration = Convert.ToString(dr["Registration"]),
                 Date = Convert.ToString(dr["Date"]),
-                Status = Convert.ToInt32(dr["Status"]),
+                Status = Convert.ToString(dr["Status"]),
                 Name = Convert.ToString(dr["Name"]),
                 ClassName = Convert.ToString(dr["ClassName"]),
                 Dob = Convert.ToString(dr["DOB"]),

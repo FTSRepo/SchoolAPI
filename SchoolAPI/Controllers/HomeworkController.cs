@@ -71,7 +71,7 @@ namespace SchoolAPI.Controllers
             return Ok(new { Message = "Homework uploaded successfully", fileUrl });
         }
 
-        // ✅ Get Homework List (for Students)
+        //Get Homework List (for Students)
         [HttpGet("getHomeworks")]
         [AllowAnonymous]
         public async Task<IActionResult> GetHomework(int schoolId, string className, string sectionName)

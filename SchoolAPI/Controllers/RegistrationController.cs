@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SchoolAPI.Enums;
 using SchoolAPI.Models.Common;
 using SchoolAPI.Models.Registration;
 using SchoolAPI.Repositories.RegistrationRepository;
@@ -125,7 +127,7 @@ namespace SchoolAPI.Controllers
 
         [HttpGet]
         [Route("GetRegistration")]
-        
+        [AllowAnonymous]
         public async Task<IActionResult> GetRegistration(int schoolId)
         {
             var result = await _registrationService.StudentRegistrationAllRecordAsync(schoolId, 0, "All", null);
@@ -141,7 +143,7 @@ namespace SchoolAPI.Controllers
         }
         [HttpGet]
         [Route("GetRegistrationByRegNo")]
-        
+        [AllowAnonymous]
         public async Task<IActionResult> GetRegistrationByRegNo(int schoolId, int regNo)
         {
             var result = await _registrationService.StudentRegistrationByRegNoAsync(schoolId, regNo);
@@ -156,7 +158,7 @@ namespace SchoolAPI.Controllers
         }
         [HttpPost]
         [Route("DeleteRegistrationByRegNo")]
-        
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteRegistrationByRegNo(int schoolId,int regNo)
         {
             bool result = await _registrationRepository.DeleteRegRecordAsync(schoolId, regNo);
@@ -172,8 +174,8 @@ namespace SchoolAPI.Controllers
 
         [HttpPost]
         [Route("UpdateRegistrationByRegNo")]
-        
-        public async Task<IActionResult> UpdateRegistrationByRegNo(int schoolId, int regNo, string status, string remark, int userId)
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateRegistrationByRegNo(int schoolId, int regNo, Status status, string remark, int userId)
         {
             bool result = await _registrationRepository.UpdateRegistrationStatusAsync(schoolId, regNo, status, remark, userId);
             if (result)

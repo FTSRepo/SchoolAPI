@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using SchoolAPI.Enums;
 using SchoolAPI.Infrastructure.Factory;
 using SchoolAPI.Models.Common;
 using SchoolAPI.Models.Registration;
@@ -260,7 +261,7 @@ namespace SchoolAPI.Repositories.RegistrationRepository
             }
         }
 
-        public async Task<bool> UpdateRegistrationStatusAsync(int schoolId, int regNo, string status, string remark, int userId)
+        public async Task<bool> UpdateRegistrationStatusAsync(int schoolId, int regNo, Status status, string remark, int userId)
         {
             using (var connection = _dbConnectionFactory.CreateConnection())
             using (var command = new SqlCommand("USP_UStudentRegistrationDetails", connection))

@@ -78,7 +78,7 @@
         public string Registration { get; set; }
         public string Date { get; set; }
         public string Remark { get; set; }
-        public int Status { get; set; }
+        public string Status { get; set; }
         public string Name { get; set; }
         public string ClassName { get; set; }
         public string Dob { get; set; }

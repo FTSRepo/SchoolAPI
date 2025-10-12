@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using SchoolAPI.Enums;
 using SchoolAPI.Models.Common;
 using SchoolAPI.Models.Registration;
 
@@ -14,7 +15,7 @@ namespace SchoolAPI.Repositories.RegistrationRepository
         Task<string> SaveRegistrationAsync(StudentRegistrationModelReq objstudentregistration);
         Task<DataTable> StudentRegistrationAllRecordAsync(int schoolId, int regno, string? type = null, string requestType = "");
         Task<bool> DeleteRegRecordAsync(int id, int schoolId);
-        Task<bool> UpdateRegistrationStatusAsync(int schoolId, int regNo, string status, string remark, int userId);
+        Task<bool> UpdateRegistrationStatusAsync(int schoolId, int regNo, Status status, string remark, int userId);
         Task<bool> UpdateEnquiriesAsync(int id);
         Task<bool> DeleteOnlineEnquiryAsync(int enquiryId);
         Task<DataTable> GetEnquiriesAsync(int schoolId, string requestType);
