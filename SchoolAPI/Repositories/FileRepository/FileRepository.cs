@@ -61,11 +61,11 @@ namespace SchoolAPI.Data
             return null;
         }
 
-        public async Task<IEnumerable<FileMetadata>> GetFilesByEntityAsync(int SchoolId, int entityId, string fileIdentifier)
+        public async Task<IEnumerable<FileMetadata>> GetFilesByEntityAsync(int SchoolId, int entityId, FileIdentifier fileIdentifier)
         {
             var files = new List<FileMetadata>();
             using var con = _dbConnectionFactory.CreateConnection();
-            using var cmd = new SqlCommand("SELECT * FROM FileMetadata WHERE TenantId=@TenantId AND EntityId=@EntityId AND FileIdentifier=@FileIdentifier", con);
+            using var cmd = new SqlCommand("SELECT * FROM FileMetadata WHERE SchoolId=@SchoolId AND entityId=@EntityId AND FileIdentifier=@FileIdentifier", con);
             cmd.Parameters.AddWithValue("@SchoolId", SchoolId);
             cmd.Parameters.AddWithValue("@EntityId", entityId);
             cmd.Parameters.AddWithValue("@FileIdentifier", fileIdentifier);
@@ -77,7 +77,7 @@ namespace SchoolAPI.Data
                 files.Add(new FileMetadata
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                    SchoolId = reader.GetInt32(reader.GetOrdinal("TenantId")),
+                    SchoolId = reader.GetInt32(reader.GetOrdinal("SchoolId")),
                     FileIdentifier = Enum.Parse<FileIdentifier>(reader["FileIdentifier"].ToString()),
                     FileCategory = Enum.Parse<FileCategory>(reader["FileCategory"].ToString()),
                     EntityId = reader.GetInt32(reader.GetOrdinal("EntityId")),
@@ -121,5 +121,6 @@ namespace SchoolAPI.Data
             await con.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
         }
+
     }
 }

@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Data.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using SchoolAPI.Enums;
 using SchoolAPI.Models;
 using SchoolAPI.Repositories.FileRepository;
@@ -25,6 +28,7 @@ namespace SchoolAPI.Controllers
         [Route("upload")]
         [HttpPost]
         [Consumes("multipart/form-data")]
+        [AllowAnonymous]
         public async Task<IActionResult> UploadFile(
             [FromForm] FileUploadRequest file,
             [FromForm] int schoolId,
@@ -66,7 +70,8 @@ namespace SchoolAPI.Controllers
 
         [Route(("{schoolId}/{entityId}/{fileIdentifier}"))]
         [HttpGet]
-        public async Task<IActionResult> GetFiles(int schoolId, int entityId, string fileIdentifier)
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFiles(int schoolId, int entityId, FileIdentifier fileIdentifier)
         {
             var files = await _repository.GetFilesByEntityAsync(schoolId, entityId, fileIdentifier);
             return Ok(files);

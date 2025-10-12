@@ -42,7 +42,6 @@ namespace SchoolAPI.Services.S3Service
 
             return $"https://{_bucketName}.s3.amazonaws.com/{key}";
         }
-
         public async Task DeleteFileAsync(string fileUrl)
         {
             try
@@ -84,15 +83,11 @@ namespace SchoolAPI.Services.S3Service
 
         private string GetFolderPath(int schoolId, FileCategory category)
         {
-            string folder = category switch
+            return category switch
             {
-                FileCategory.Homework => "homework",
-                FileCategory.Notice => "notice",
-                FileCategory.News => "news",
-                _ => "general"
+                FileCategory.General => $"{schoolId}/", // stays in root folder
+                _ => $"{schoolId}/homework/" // others inside subfolders
             };
-
-            return $"{schoolId}/{folder}/";
         }
     }
 }
