@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using Amazon.S3;
+using Amazon;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -73,6 +75,20 @@ builder.Services.AddAuthorization(options =>
         .Build();
 });
 
+builder.Services.AddSingleton<IAmazonS3>(sp =>
+{
+    var config = builder.Configuration;
+    var awsOptions = new AmazonS3Config
+    {
+        RegionEndpoint = RegionEndpoint.GetBySystemName(config["AWS:Region"])
+    };
+
+    return new AmazonS3Client(
+        config["AWS:AccessKey"],
+        config["AWS:SecretKey"],
+        awsOptions
+    );
+});
 // CORS
 builder.Services.AddCors(opt =>
 {
