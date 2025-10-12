@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Amazon.Runtime.Internal.Endpoints.StandardLibrary;
 using Microsoft.AspNetCore.Mvc;
 using SchoolAPI.Enums;
 using SchoolAPI.Models;

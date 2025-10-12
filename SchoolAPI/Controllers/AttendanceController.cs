@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Http;
+﻿using System.Data;
 using Microsoft.AspNetCore.Mvc;
-using SchoolAPI.Services.AttendanceService;
 using SchoolAPI.Models.Attendance;
+using SchoolAPI.Services.AttendanceService;
 using SchoolAPI.Services.CommonService;
 
 namespace SchoolAPI.Controllers

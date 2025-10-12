@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SchoolAPI.Services.Homework;
+﻿using Microsoft.AspNetCore.Mvc;
 using SchoolAPI.Models.Homework;
-using Microsoft.AspNetCore.Http.HttpResults;
+using SchoolAPI.Services.Homework;
 
 namespace SchoolAPI.Controllers
 { 

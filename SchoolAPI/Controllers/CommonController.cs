@@ -1,16 +1,13 @@
 ﻿using System.Data;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolAPI.Models.Common;
-using SchoolAPI.Models.Exam;
 using SchoolAPI.Models.Free;
 using SchoolAPI.Services.CommonService;
 using SchoolAPI.Services.FeeManagement;
-using static Azure.Core.HttpHeader;
 
 [ApiController]
 public class CommonController : ControllerBase

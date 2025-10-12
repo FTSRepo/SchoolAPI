@@ -1,5 +1,4 @@
-﻿using Amazon.S3;
-using SchoolAPI.Data;
+﻿using SchoolAPI.Data;
 using SchoolAPI.Infrastructure.Factory;
 using SchoolAPI.Repositories.AttendanceRepository;
 using SchoolAPI.Repositories.AuthRepository;
