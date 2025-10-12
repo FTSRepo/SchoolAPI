@@ -4,9 +4,9 @@ using SchoolAPI.Models.Common;
 using SchoolAPI.Models.Registration;
 
 namespace SchoolAPI.Repositories.RegistrationRepository
-{
-    public interface IRegistrationRepository
     {
+    public interface IRegistrationRepository
+        {
         Task<DataTable> BindCategoryDropdownsAsync();
         Task<string> GetNewRegNumberAsync(int schoolId);
         Task<DataTable> BindReligionDropdownsAsync();
@@ -21,5 +21,5 @@ namespace SchoolAPI.Repositories.RegistrationRepository
         Task<DataTable> GetEnquiriesAsync(int schoolId, string requestType);
         Task<DataTable> GetEnquiryByIdAsync(int schoolId, int enquiryId);
         Task<bool> SaveEnquiryAsync(EnquiryM enquiryM);
+        }
     }
-}

@@ -1,11 +1,10 @@
 ﻿using System.Data;
-using Microsoft.Data.SqlClient;
 using SchoolAPI.Models.Free;
 
 namespace SchoolAPI.Repositories.FeeRepository
-{
-    public interface IPaymentgatwayRepository
     {
+    public interface IPaymentgatwayRepository
+        {
         Task<DataTable> GetPaymentAPIAsync(int SchoolId);
         Task<string> SubmitOnlineFeeAsync(DataTable dt);
         Task<DataSet> CreateOnlinePaymnetOrderAsync(OnlineCreateOrderRequest onlineCreatedOrderRequest);
@@ -14,5 +13,5 @@ namespace SchoolAPI.Repositories.FeeRepository
         Task<string> UpdateOnlineOrderStatusAsync(OnlineOrderStatusRequest onlineOrderStatus);
         Task<DataTable> SaveOnlinePaymentOrderAsync(OnlinePaymentOrderRequest onlinePaymentOrderRequest);
         Task<string> SaveOnlinePaymentAsync(OnlinePaymentRequest payment);
+        }
     }
-}

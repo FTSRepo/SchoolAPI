@@ -1,7 +1,7 @@
 ﻿namespace SchoolAPI.Models.Auth
-{
-    public enum UsertTypeMasterEnum
     {
+    public enum UsertTypeMasterEnum
+        {
 
+        }
     }
-}

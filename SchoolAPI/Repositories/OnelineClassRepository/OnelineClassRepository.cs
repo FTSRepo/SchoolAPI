@@ -1,20 +1,20 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System.Data;
+using Microsoft.Data.SqlClient;
 using SchoolAPI.Infrastructure.Factory;
 using SchoolAPI.Models.OnelineClass;
-using System.Data;
 
 namespace SchoolAPI.Repositories.OnelineClassRepository
-{
-    public class OnelineClassRepository(IDbConnectionFactory dbConnectionFactory) : IOnelineClassRepository
     {
+    public class OnelineClassRepository(IDbConnectionFactory dbConnectionFactory) : IOnelineClassRepository
+        {
         private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
         public async Task<DataSet> GetOnlineClassSetupAsync(int schoolId, int sessionId, int staffId, int studentId, string userType)
-        {
+            {
             using var con = _dbConnectionFactory.CreateConnection();
             using var cmd = new SqlCommand("usp_Get_OnlineClassSetup", con)
-            {
+                {
                 CommandType = CommandType.StoredProcedure
-            };
+                };
 
             cmd.Parameters.AddWithValue("@SchoolId", schoolId);
             cmd.Parameters.AddWithValue("@SessionId", sessionId);
@@ -31,18 +31,18 @@ namespace SchoolAPI.Repositories.OnelineClassRepository
             await Task.Run(() => adapter.Fill(ds));
 
             return ds;
-        }
+            }
         public async Task<bool> AddOnlineClassSetupAsync(OnlineClassSetupRequest onlineClassSetupRequest)
-        {
+            {
             var startTime = onlineClassSetupRequest.starttime.TimeOfDay;
             var endTime = onlineClassSetupRequest.endtime.TimeOfDay;
             using var con = _dbConnectionFactory.CreateConnection();
             using var cmd = new SqlCommand("USP_SaveOnlineClass", con)
-            {
+                {
                 CommandType = CommandType.StoredProcedure
-            };
-            cmd.Parameters.AddWithValue("@SchoolId", onlineClassSetupRequest.schoolId != 0 ? onlineClassSetupRequest.schoolId : (object)DBNull.Value);
-            cmd.Parameters.AddWithValue("@SessionId", onlineClassSetupRequest.SessionId != 0 ? onlineClassSetupRequest.SessionId : (object)DBNull.Value);
+                };
+            cmd.Parameters.AddWithValue("@SchoolId", onlineClassSetupRequest.schoolId != 0 ? onlineClassSetupRequest.schoolId : ( object ) DBNull.Value);
+            cmd.Parameters.AddWithValue("@SessionId", onlineClassSetupRequest.SessionId != 0 ? onlineClassSetupRequest.SessionId : ( object ) DBNull.Value);
             cmd.Parameters.AddWithValue("@classId", onlineClassSetupRequest.classId);
             cmd.Parameters.AddWithValue("@sectionId", onlineClassSetupRequest.sectionId);
             cmd.Parameters.AddWithValue("@staffId", onlineClassSetupRequest.staffId);
@@ -54,6 +54,6 @@ namespace SchoolAPI.Repositories.OnelineClassRepository
             await con.OpenAsync();
             int rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
+            }
         }
     }
-}

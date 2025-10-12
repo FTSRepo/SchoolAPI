@@ -2,9 +2,9 @@
 using SchoolAPI.Models.Exam;
 
 namespace SchoolAPI.Repositories.ExamRepository
-{
-    public interface IExamRepository
     {
+    public interface IExamRepository
+        {
         Task<DataTable> GetPrincipalMsgAsync(int schoolId);
         Task<string> SavePrincipalMsgAsync(int schoolId, string msg);
 
@@ -29,5 +29,5 @@ namespace SchoolAPI.Repositories.ExamRepository
         Task<DataTable> GetResultNameAndDateAsync(int schoolId, int sessionId);
         Task<DataTable> GetCheckAllDueClearAsync(int schoolId, int sessionId, int studentId);
         Task<DataTable> GetCheckStudentMarksEntryAsync(int schoolId, int sessionId, int studentId, string examCode);
+        }
     }
-}

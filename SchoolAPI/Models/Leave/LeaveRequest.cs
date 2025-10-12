@@ -1,7 +1,7 @@
 ﻿namespace SchoolAPI.Models.Leave
-{
-    public class LeaveRequest
     {
+    public class LeaveRequest
+        {
         public int LeaveApId { get; set; }
         public int SchoolId { get; set; }
         public int SessionId { get; set; }
@@ -16,5 +16,5 @@
         public string ApprovalRemark { get; set; }
         public DateTime CreateDate { get; set; }
         public string RequesterName { get; set; }
+        }
     }
-}

@@ -1,11 +1,11 @@
 ﻿using System.Text;
-using Amazon.S3;
+using System.Text.Json.Serialization;
 using Amazon;
+using Amazon.S3;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SchoolAPI.Infrastructure;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,23 +13,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddInfrastructure(builder.Configuration);
 
 // JWT
-var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Secret"]);
+var key = Encoding.ASCII.GetBytes(builder.Configuration ["Jwt:Secret"]);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.RequireHttpsMetadata = false; // false for dev
         options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
-        {
+            {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateIssuerSigningKey = true,
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
+            ValidIssuer = builder.Configuration ["Jwt:Issuer"],
+            ValidAudience = builder.Configuration ["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(key)
-        };
+            };
     });
 
 // Controllers
@@ -46,14 +46,14 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "School API", Version = "v1" });
     // Add JWT auth support
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
+        {
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = "bearer",
         BearerFormat = "JWT",
         Description = "Enter JWT token without 'Bearer ' prefix"
-    });
+        });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
@@ -84,13 +84,13 @@ builder.Services.AddSingleton<IAmazonS3>(sp =>
 {
     var config = builder.Configuration;
     var awsOptions = new AmazonS3Config
-    {
-        RegionEndpoint = RegionEndpoint.GetBySystemName(config["AWS:Region"])
-    };
+        {
+        RegionEndpoint = RegionEndpoint.GetBySystemName(config ["AWS:Region"])
+        };
 
     return new AmazonS3Client(
-        config["AWS:AccessKey"],
-        config["AWS:SecretKey"],
+        config ["AWS:AccessKey"],
+        config ["AWS:SecretKey"],
         awsOptions
     );
 });

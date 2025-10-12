@@ -1,9 +1,9 @@
 ﻿using SchoolAPI.Enums;
 
 namespace SchoolAPI.Models
-{
-    public class FileMetadata
     {
+    public class FileMetadata
+        {
         public int Id { get; set; }
         public int SchoolId { get; set; } // school code or tenant key
         public FileIdentifier FileIdentifier { get; set; } // e.g. StudentProfile, StaffDoc, etc.
@@ -16,5 +16,5 @@ namespace SchoolAPI.Models
         public string ContentType { get; set; }
         public DateTime UploadedAt { get; set; }
         public DateTime? ExpiryDate { get; set; } // null = permanent
+        }
     }
-}

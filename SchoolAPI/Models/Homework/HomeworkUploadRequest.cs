@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 public class HomeworkUploadRequest
-{
+    {
     [Required] public int SchoolId { get; set; }
     [Required] public string ClassName { get; set; }
     [Required] public string SectionName { get; set; }
@@ -10,10 +10,10 @@ public class HomeworkUploadRequest
     public string Description { get; set; }
 
     [Required] public IFormFile File { get; set; }
-}
+    }
 
 public class HomeworkResponse
-{
+    {
     public int Id { get; set; }
     public string ClassName { get; set; }
     public string SectionName { get; set; }
@@ -22,4 +22,4 @@ public class HomeworkResponse
     public string FileUrl { get; set; }
     public string FileName { get; set; }
     public string Description { get; set; }
-}
+    }

@@ -2,9 +2,9 @@
 using SchoolAPI.Models.Free;
 
 namespace SchoolAPI.Services.FeeManagement
-{
-    public interface IPaymentgatewayService
     {
+    public interface IPaymentgatewayService
+        {
         Task<DataTable> GetPaymentAPIAsync(int SchoolId);
         Task<string> SubmitOnlineFeeAsync(DataTable dt);
         Task<OnlineCreateOrderResponse> CreateOnlinePaymnetOrderAsync(OnlineCreateOrderRequest onlineCreatedOrderRequest);
@@ -13,5 +13,5 @@ namespace SchoolAPI.Services.FeeManagement
         Task<string> UpdateOnlineOrderStatusAsync(OnlineOrderStatusRequest onlineOrderStatus);
         Task<OnlinePaymentOrderRequest> SaveOnlinePaymentOrderAsync(OnlinePaymentOrderRequest onlinePaymentOrderRequest);
         Task<string> SaveOnlinePaymentAsync(OnlinePaymentRequest payment);
+        }
     }
-}

@@ -2,9 +2,9 @@
 using SchoolAPI.Models.Common;
 
 namespace SchoolAPI.Services.CommonService
-{
-    public interface ICommonService
     {
+    public interface ICommonService
+        {
         Task<List<ClassM>> GetClassByTeacherAsync(int schoolId, int userId);
         Task<List<SectionM>> GetSectionAsync(int schoolId, int classId, int userId = 0);
         Task<List<SubjectM>> GetSubjectListAsync(int schoolId);
@@ -34,5 +34,5 @@ namespace SchoolAPI.Services.CommonService
         Task<DataTable> GetApiDetailAsync(int schoolId);
         Task UpdateSMSCreditAsync(int schoolId, int credit);
         Task<string> FTSMessanger(string msg, string listMobile, int SchoolId, int type, string sid, string entityId = null, string dltTemplateId = null, int languageid = 1);
+        }
     }
-}

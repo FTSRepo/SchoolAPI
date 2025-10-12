@@ -1,10 +1,9 @@
 ﻿using SchoolAPI.Models.Exam;
-using System.Data;
 
 namespace SchoolAPI.Services.ExamManagement
-{
-    public interface IExamService
     {
+    public interface IExamService
+        {
         Task<List<GetMessageResponse>> GetPrincipalMsgAsync(int schoolId);
         Task<string> SavePrincipalMsgAsync(int schoolId, string msg);
 
@@ -29,5 +28,5 @@ namespace SchoolAPI.Services.ExamManagement
         Task<List<ExamNameAndDate>> GetResultNameAndDateAsync(int schoolId, int sessionId);
         Task<bool> GetCheckAllDueClearAsync(int schoolId, int sessionId, int studentId);
         Task<bool> GetCheckStudentMarksEntryAsync(int schoolId, int sessionId, int studentId, string examCode);
+        }
     }
-}

@@ -2,9 +2,9 @@
 using SchoolAPI.Models.Common;
 
 namespace SchoolAPI.Repositories.CommonRepository
-{
-    public interface ICommonRepository
     {
+    public interface ICommonRepository
+        {
         Task<DataTable> GetClassByTeacherAsync(int schoolId, int userId);
         Task<DataTable> GetSectionAsync(int classId, int schoolId, int userId = 0);
         Task<DataTable> GetSubjectAsync(int schoolId);
@@ -34,5 +34,5 @@ namespace SchoolAPI.Repositories.CommonRepository
         Task<DataTable> GetApiDetailAsync(int schoolId);
         Task UpdateSMSCreditAsync(int schoolId, int credit);
         Task<string> InsertSMSLogAsync(DataTable dt);
+        }
     }
-}

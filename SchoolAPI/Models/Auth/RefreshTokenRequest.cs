@@ -1,7 +1,7 @@
 ﻿namespace SchoolAPI.Models.Auth
-{
-    public class RefreshTokenRequest
     {
+    public class RefreshTokenRequest
+        {
         public string RefreshToken { get; set; }
+        }
     }
-}

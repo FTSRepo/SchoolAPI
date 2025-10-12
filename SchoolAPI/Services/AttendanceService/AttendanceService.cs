@@ -1,57 +1,57 @@
-﻿using SchoolAPI.Models.Attendance;
-using System.Data;
-using SchoolAPI.Repositories.AttendanceRepository;
+﻿using System.Data;
 using System.Text.RegularExpressions;
-using SchoolAPI.Services.CommonService;
+using SchoolAPI.Models.Attendance;
+using SchoolAPI.Repositories.AttendanceRepository;
 using SchoolAPI.Repositories.CommonRepository;
+using SchoolAPI.Services.CommonService;
 
 namespace SchoolAPI.Services.AttendanceService
-{
-    public class AttendanceService(IAttendanceRepository attendanceRepository, ICommonService commonService, ICommonRepository commonRepository) : IAttendanceService
     {
+    public class AttendanceService(IAttendanceRepository attendanceRepository, ICommonService commonService, ICommonRepository commonRepository) : IAttendanceService
+        {
         private readonly IAttendanceRepository _attendanceRepository = attendanceRepository;
         private readonly ICommonService _commons = commonService;
         private readonly ICommonRepository _commonRepository = commonRepository;
 
         public async Task<List<StaffListRespM>> GetStaffAttendanceAsync(int schoolId)
-        {
+            {
             List<StaffListRespM> staffLists = new List<StaffListRespM>();
             DataTable dt = await _attendanceRepository.GetStaffAttendanceAsync(schoolId);
-            foreach (DataRow dr in dt.Rows)
-            {
-                staffLists.Add(new StaffListRespM
+            foreach ( DataRow dr in dt.Rows )
                 {
-                    StaffCode = Convert.ToString(dr["StaffCode"]),
-                    Name = Convert.ToString(dr["Name"]),
-                    Contact = Convert.ToString(dr["Contact1"]),
-                    Gender = Convert.ToString(dr["Gender"]),
-                    Department = Convert.ToString(dr["Department"])
-                });
-            }
+                staffLists.Add(new StaffListRespM
+                    {
+                    StaffCode = Convert.ToString(dr ["StaffCode"]),
+                    Name = Convert.ToString(dr ["Name"]),
+                    Contact = Convert.ToString(dr ["Contact1"]),
+                    Gender = Convert.ToString(dr ["Gender"]),
+                    Department = Convert.ToString(dr ["Department"])
+                    });
+                }
             return staffLists;
-        }
+            }
         public async Task<List<StudentListRespM>> GetStudentAttendanceAsync(AttendanceFilter filter)
-        {
+            {
             List<StudentListRespM> studentListMs = new List<StudentListRespM>();
             DataTable dt = await _attendanceRepository.GetStudentAttendanceAsync(filter.SchoolId, filter.SessionId, filter.ClassId, filter.Sectionid);
-            foreach (DataRow dr in dt.Rows)
-            {
-                studentListMs.Add(new StudentListRespM
+            foreach ( DataRow dr in dt.Rows )
                 {
-                    AdmNo = Convert.ToString(dr["AdmissionNumber"]),
-                    StudentId = Convert.ToInt32(dr["StudentId"]),
-                    Name = Convert.ToString(dr["Name"]),
-                    Gender = Convert.ToString(dr["Gender"]),
-                    RollNo = Convert.ToInt32(dr["RollNo"]),
-                    FatherName = Convert.ToString(dr["FatherName"])
-                });
-            }
+                studentListMs.Add(new StudentListRespM
+                    {
+                    AdmNo = Convert.ToString(dr ["AdmissionNumber"]),
+                    StudentId = Convert.ToInt32(dr ["StudentId"]),
+                    Name = Convert.ToString(dr ["Name"]),
+                    Gender = Convert.ToString(dr ["Gender"]),
+                    RollNo = Convert.ToInt32(dr ["RollNo"]),
+                    FatherName = Convert.ToString(dr ["FatherName"])
+                    });
+                }
             return studentListMs;
-        }
+            }
         public async Task<string> InsertStaffAttendanceAsync(StaffAttendanceRequestM saveAttendanceMaster)
-        {
+            {
             DataTable dt = new DataTable();
-            dt.Columns.AddRange(new DataColumn[13] {// new DataColumn("Id", typeof(int)),
+            dt.Columns.AddRange(new DataColumn [13] {// new DataColumn("Id", typeof(int)),
                         new DataColumn("SchoolId",typeof(int)),
                         new DataColumn("Name", typeof(string)),
                         new DataColumn("staffcode",typeof(string)),
@@ -67,8 +67,8 @@ namespace SchoolAPI.Services.AttendanceService
                         new DataColumn("ModifyOn", typeof(DateTime)),
                 });
 
-            foreach (StaffAttendanceDetailM attendaceDetails in saveAttendanceMaster.lSaveAttendanceDetails)
-            {
+            foreach ( StaffAttendanceDetailM attendaceDetails in saveAttendanceMaster.lSaveAttendanceDetails )
+                {
                 dt.Rows.Add(
                             saveAttendanceMaster.SchoolId,
                             attendaceDetails.Name,
@@ -84,23 +84,23 @@ namespace SchoolAPI.Services.AttendanceService
                             saveAttendanceMaster.UserId,
                             Convert.ToString(DateTime.Now)
                             );
-            }
+                }
             string msg = await _attendanceRepository.InsertStaffAttendanceAsync(dt);
             return msg;
 
-        }
+            }
         public async Task<string> InsertStudentAttendanceAsync(StudentAttendanceRequestM saveAttendanceMaster)
-        {
+            {
             string msg = "";
             string template;
             List<string> smsresponse = new List<string>();
             DataTable dt1 = await _commons.GetTemplateSmsAsync(saveAttendanceMaster.SchoolId, 1);
-            template = dt1.Rows[0]["TemplateDesc"].ToString();
-            string entityId = dt1.Rows[0]["entityId"].ToString();
-            string dlttemplate = dt1.Rows[0]["DltTemplateId"].ToString();
+            template = dt1.Rows [0] ["TemplateDesc"].ToString();
+            string entityId = dt1.Rows [0] ["entityId"].ToString();
+            string dlttemplate = dt1.Rows [0] ["DltTemplateId"].ToString();
 
             DataTable dt = new DataTable();
-            dt.Columns.AddRange(new DataColumn[16]
+            dt.Columns.AddRange(new DataColumn [16]
                 {
                         new DataColumn("SchoolId", typeof(int)),
                         new DataColumn("SessionId", typeof(int)),
@@ -119,8 +119,8 @@ namespace SchoolAPI.Services.AttendanceService
                         new DataColumn("ModifyOn", typeof(DateTime)),
                         new DataColumn("RollNo",typeof(int)),
             });
-            foreach (StudentAttendanceDetailM attendaceDetails in saveAttendanceMaster.lSaveAttendanceDetails)
-            {
+            foreach ( StudentAttendanceDetailM attendaceDetails in saveAttendanceMaster.lSaveAttendanceDetails )
+                {
                 dt.Rows.Add(
                             saveAttendanceMaster.SchoolId,
                             saveAttendanceMaster.SessionId,
@@ -139,45 +139,45 @@ namespace SchoolAPI.Services.AttendanceService
                             Convert.ToString(DateTime.Now),
                             attendaceDetails.RollNo
                             );
-                if (saveAttendanceMaster.SchoolId != 41)
-                {
-                    if (Convert.ToInt32(attendaceDetails.Status) != 1 || attendaceDetails.Status != "1")
+                if ( saveAttendanceMaster.SchoolId != 41 )
                     {
+                    if ( Convert.ToInt32(attendaceDetails.Status) != 1 || attendaceDetails.Status != "1" )
+                        {
                         string curDate = Convert.ToString(DateTime.Now).Substring(0, 9);
                         string atenDate = Convert.ToString(Convert.ToDateTime(saveAttendanceMaster.Date)).Substring(0, 9);
-                        if (curDate == atenDate)
-                        {
-                            attendaceDetails.Contact = await _commons.GetStudentMobileByStudentIdAsync(attendaceDetails.StudentID);
-                            if (attendaceDetails.Contact != null || attendaceDetails.Contact != "")
+                        if ( curDate == atenDate )
                             {
-                                if (Regex.Match(attendaceDetails.Contact.Trim(), @"^[6789]\d{9}$").Success)
+                            attendaceDetails.Contact = await _commons.GetStudentMobileByStudentIdAsync(attendaceDetails.StudentID);
+                            if ( attendaceDetails.Contact != null || attendaceDetails.Contact != "" )
                                 {
+                                if ( Regex.Match(attendaceDetails.Contact.Trim(), @"^[6789]\d{9}$").Success )
+                                    {
                                     string Contact = "91" + attendaceDetails.Contact.Trim();
                                     string sid = attendaceDetails.StudentID.ToString();
                                     //template = template == null ? "Dear Parent, '" + attendaceDetails.Name.ToUpper() + "' is absent today" : template.Replace("@", attendaceDetails.Name.ToUpper());
                                     //template = template.Replace("{#var#}", attendaceDetails.Name.ToUpper());
 
-                                    string SMSCredit =await _commons.GetSMSCreditAsync(saveAttendanceMaster.SchoolId);
-                                    if (Convert.ToInt32(SMSCredit) > 0)
-                                    {
+                                    string SMSCredit = await _commons.GetSMSCreditAsync(saveAttendanceMaster.SchoolId);
+                                    if ( Convert.ToInt32(SMSCredit) > 0 )
+                                        {
                                         smsresponse.Add(await _commons.FTSMessanger(template.Replace("{#var#}", attendaceDetails.Name.ToUpper()), Contact, saveAttendanceMaster.SchoolId, 1, sid, entityId, dlttemplate));
-                                    }
+                                        }
                                     else
-                                    {
+                                        {
                                         msg = "Insufficient SMS Credit - ";
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
                 else
-                {
-                    if (Convert.ToInt32(attendaceDetails.Status) != 1 || attendaceDetails.Status != "1")
                     {
+                    if ( Convert.ToInt32(attendaceDetails.Status) != 1 || attendaceDetails.Status != "1" )
+                        {
                         msg = template.Replace("{#var#}", attendaceDetails.Name.ToUpper());
                         DataTable smsDT = new DataTable();
-                        smsDT.Columns.AddRange(new DataColumn[10]
+                        smsDT.Columns.AddRange(new DataColumn [10]
                         {
                             new DataColumn("SchoolId", typeof(int)),
                             new DataColumn("Mobile", typeof(string)),
@@ -202,27 +202,27 @@ namespace SchoolAPI.Services.AttendanceService
                                   DateTime.Now,
                                   ""
                                 );
-                       await _commonRepository.InsertSMSLogAsync(smsDT);
+                        await _commonRepository.InsertSMSLogAsync(smsDT);
+                        }
                     }
                 }
-            }
             msg += await _attendanceRepository.InsertStudentAttendanceAsync(dt);
             return msg;
-        }
+            }
         public async Task<DataTable> GetAttendanceByStudentIdAsync(AttendanceFilter filter)
-        {
+            {
             DataTable dt = await _attendanceRepository.GetAttendanceByStudentIdAsync(filter);
             return dt;
-        }
+            }
         public async Task<DataTable> GetAttendanceByStaffIdAsync(AttendanceFilter filter)
-        {
+            {
             DataTable dt = await _attendanceRepository.GetAttendanceByStaffIdAsync(filter);
             return dt;
-        }
+            }
         public async Task<DataTable> GetAbsentStudentsListAsync(AttendanceFilter filter)
-        {
+            {
             DataTable dt = await _attendanceRepository.GetAbsentStudentsListAsync(filter);
             return dt;
+            }
         }
     }
-}

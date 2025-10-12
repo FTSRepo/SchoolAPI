@@ -2,9 +2,9 @@
 using SchoolAPI.Models.Free;
 
 namespace SchoolAPI.Repositories.FeeRepository
-{
-    public interface IFeeRepository
     {
+    public interface IFeeRepository
+        {
         Task<string> SaveOnlinePaymentAsync(OnlinePaymentRequest payment);
         Task<DataTable> SaveOnlinePaymentOrderAsync(OnlinePaymentOrderRequest onlinePaymentOrderRequest);
         Task<string> UpdateOnlineOrderStatusAsync(OnlineOrderStatusRequest onlineOrderStatus);
@@ -16,5 +16,5 @@ namespace SchoolAPI.Repositories.FeeRepository
         Task<DataTable> GetDaywiseFeeDAsync(int SchoolId, int SessionId);
         Task<DataTable> GetTodaysCollectionReportsAsync(int SchoolId, int SessionId, int userId, DateTime currentDate);
         Task<DataTable> GetStudentsPaidFeeAsync(int SchoolId, int SessionId);
+        }
     }
-}

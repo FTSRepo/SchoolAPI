@@ -24,11 +24,11 @@ using SchoolAPI.Services.RegistrationService;
 using SchoolAPI.Services.S3Service;
 
 namespace SchoolAPI.Infrastructure
-{
-    public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static class DependencyInjection
         {
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+            {
             // Register DbConnectionFactory
             services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 
@@ -41,7 +41,7 @@ namespace SchoolAPI.Infrastructure
             services.AddScoped<IHomeworkRepository, HomeworkRepository>();
             services.AddScoped<IHomeworkService, HomeworService>();
             services.AddScoped<IOnelineClassRepository, OnelineClassRepository>();
-            services.AddScoped<IOnelineClassService, OnelineClassService>();  
+            services.AddScoped<IOnelineClassService, OnelineClassService>();
             services.AddScoped<IPaymentgatwayRepository, PaymentgatwayRepository>();
             services.AddScoped<IPaymentgatewayService, PaymentgatwayService>();
             services.AddScoped<IFeeService, FeeService>();
@@ -59,6 +59,6 @@ namespace SchoolAPI.Infrastructure
             services.AddScoped<IFileRepository, FileRepository>();
             services.AddHostedService<FileCleanupService>();
             return services;
+            }
         }
     }
-}

@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace SchoolAPI.Models.Common
-{
-    public class ViewStudentM
+﻿namespace SchoolAPI.Models.Common
     {
+    public class ViewStudentM
+        {
         // Core properties in use
         public int rollNo { get; set; }
         public int SchoolId { get; set; }
@@ -47,5 +45,5 @@ namespace SchoolAPI.Models.Common
         public string Area { get; set; }
         public string Pincode { get; set; }
         public string LandMark { get; set; }
+        }
     }
-}

@@ -1,7 +1,7 @@
 ﻿namespace SchoolAPI.Models.Auth
-{ 
-    public class LoginResponse
     {
+    public class LoginResponse
+        {
         public int UserId { get; set; }
         public string UserName { get; set; }
         public int SchoolId { get; set; }
@@ -39,9 +39,9 @@
         public List<MobileUserMenu> MobileMenu { get; set; }
         public List<Student> Students { get; set; }
 
-    }
+        }
     public class Student
-    {
+        {
         public int StudentId { get; set; }
         public string AdmissionNumber { get; set; }
         public string Name { get; set; }
@@ -55,5 +55,5 @@
         public int SectionId { get; set; }
         public string Logo { get; set; }
         public string Address { get; set; }
+        }
     }
-}

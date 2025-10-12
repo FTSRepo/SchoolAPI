@@ -2,9 +2,9 @@
 using SchoolAPI.Models.Attendance;
 
 namespace SchoolAPI.Services.AttendanceService
-{
-    public interface IAttendanceService
     {
+    public interface IAttendanceService
+        {
         Task<List<StudentListRespM>> GetStudentAttendanceAsync(AttendanceFilter filter);
         Task<List<StaffListRespM>> GetStaffAttendanceAsync(int schoolId);
         Task<string> InsertStaffAttendanceAsync(StaffAttendanceRequestM saveAttendanceMaster);
@@ -12,5 +12,5 @@ namespace SchoolAPI.Services.AttendanceService
         Task<DataTable> GetAttendanceByStudentIdAsync(AttendanceFilter filter);
         Task<DataTable> GetAttendanceByStaffIdAsync(AttendanceFilter filter);
         Task<DataTable> GetAbsentStudentsListAsync(AttendanceFilter filter);
+        }
     }
-}

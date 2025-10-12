@@ -1,7 +1,7 @@
 ﻿namespace SchoolAPI.Models.Homework
-{
-    public class HomeWorkMasterM
     {
+    public class HomeWorkMasterM
+        {
         public int Id { get; set; }
         public int SchoolId { get; set; }
         public int SessionId { get; set; }
@@ -23,24 +23,24 @@
         public DateTime ModifiedOn { get; set; }
         public string StudentIds { get; set; }
 
-    }
+        }
 
 
     public class HomeWorkDetailM
-    {
+        {
         public int Id { get; set; }
         public string Question { get; set; }
         public string Filename { get; set; }
         public byte File { get; set; }
         public string Filepath { get; set; }
 
-    }
+        }
     public class HomeWorkResponseM
-    {
+        {
         public string SubjectName { get; set; }
         public DateTime HomeWorkDate { get; set; }
         public string TeacherName { get; set; }
         public string Question { get; set; }
         public string Filename { get; set; }
+        }
     }
-}
