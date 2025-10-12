@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SchoolAPI.Services.Homework;
 using SchoolAPI.Models.Homework;
-using Microsoft.AspNetCore.Http.HttpResults;
+using SchoolAPI.Repositories.HomeworkRepository;
+using SchoolAPI.Services.Homework;
+using SchoolAPI.Services.S3Service;
 
 namespace SchoolAPI.Controllers
 { 
     [ApiController]
-    public class HomeworkController(IHomeworkService homeworkService) : ControllerBase
+    public class HomeworkController(IHomeworkService homeworkService, IS3FileService s3FileService, IHomeworkRepository homeworkRepository) : ControllerBase
     {
         private readonly IHomeworkService _homeworkService = homeworkService;
+        private readonly IS3FileService _s3Service = s3FileService;
+        private readonly IHomeworkRepository _homeworkRepository = homeworkRepository;
 
         [Route("api/SaveHomeWork")]
         [HttpPost]
@@ -49,6 +50,38 @@ namespace SchoolAPI.Controllers
             {
                 return Ok(new { Message = "Homework assigned failed", Status = false });
             }
+        }
+
+        [HttpPost("saveanduploadhomework")]
+        [Consumes("multipart/form-data")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UploadHomework([FromForm] HomeworkUploadRequest request)
+        {
+            string fileUrl = string.Empty;
+
+            if (request.File != null)
+            fileUrl = await _s3Service.UploadFileAsync(request.SchoolId, request.File, Enums.FileCategory.Homework);
+
+            int result = await _homeworkRepository.SveHomeWorkAsync(request, fileUrl).ConfigureAwait(false);
+            if(request == null || result == 0)
+            {
+                return BadRequest("Failed to save homework.");
+            }
+
+            return Ok(new { Message = "Homework uploaded successfully", fileUrl });
+        }
+
+        // ✅ Get Homework List (for Students)
+        [HttpGet("getHomeworks")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetHomework(int schoolId, string className, string sectionName)
+        {
+           var result = await _homeworkRepository.GetHomeworkAsync(schoolId, className, sectionName).ConfigureAwait(false);
+            if (result == null || result.Count == 0)
+            {
+                return NotFound("No homework found.");
+            }
+            return Ok(result);
         }
     }
 }

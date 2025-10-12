@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.Net;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SchoolAPI.Services.FeeManagement;
-using System.Threading.Tasks;
-using SchoolAPI.Models.Free;
+﻿using Microsoft.AspNetCore.Mvc;
 using Razorpay.Api;
+using SchoolAPI.Models.Free;
+using SchoolAPI.Services.FeeManagement;
 
 namespace SchoolAPI.Controllers
 {

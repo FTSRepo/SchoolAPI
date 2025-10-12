@@ -1,7 +1,5 @@
 ﻿using SchoolAPI.Models.Common;
 using SchoolAPI.Models.Registration;
-using System.Data;
-using System.Text.RegularExpressions;
 
 namespace SchoolAPI.Services.RegistrationService
 {

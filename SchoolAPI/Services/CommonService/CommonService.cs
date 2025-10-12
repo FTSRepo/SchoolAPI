@@ -25,9 +25,9 @@ namespace SchoolAPI.Services.CommonService
             }
             return classMs;
         }
-        public async Task<List<SectionM>> GetSectionAsync(int classId, int schoolId, int userId = 0)
+        public async Task<List<SectionM>> GetSectionAsync( int schoolId, int classId,  int userId = 0)
         {
-            DataTable dt = await _commonRepository.GetSectionAsync(classId, schoolId, userId).ConfigureAwait(false);
+            DataTable dt = await _commonRepository.GetSectionAsync(schoolId, classId, userId).ConfigureAwait(false);
             List<SectionM> sectionMs = new List<SectionM>();
             foreach (DataRow dr in dt.Rows)
             {

@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SchoolAPI.Models.Auth;
+﻿using Microsoft.AspNetCore.Mvc;
 using SchoolAPI.Services.MessageService;
 
 namespace SchoolAPI.Controllers

@@ -1,14 +1,17 @@
-﻿using SchoolAPI.Infrastructure.Factory;
+﻿using SchoolAPI.Data;
+using SchoolAPI.Infrastructure.Factory;
 using SchoolAPI.Repositories.AttendanceRepository;
 using SchoolAPI.Repositories.AuthRepository;
 using SchoolAPI.Repositories.CommonRepository;
 using SchoolAPI.Repositories.ExamRepository;
 using SchoolAPI.Repositories.FeeRepository;
+using SchoolAPI.Repositories.FileRepository;
 using SchoolAPI.Repositories.HomeworkRepository;
 using SchoolAPI.Repositories.LeaveRepository;
 using SchoolAPI.Repositories.MessageRepository;
 using SchoolAPI.Repositories.OnelineClassRepository;
 using SchoolAPI.Repositories.RegistrationRepository;
+using SchoolAPI.Services;
 using SchoolAPI.Services.AttendanceService;
 using SchoolAPI.Services.AuthService;
 using SchoolAPI.Services.CommonService;
@@ -18,6 +21,7 @@ using SchoolAPI.Services.Homework;
 using SchoolAPI.Services.MessageService;
 using SchoolAPI.Services.OnelineClassService;
 using SchoolAPI.Services.RegistrationService;
+using SchoolAPI.Services.S3Service;
 
 namespace SchoolAPI.Infrastructure
 {
@@ -51,6 +55,9 @@ namespace SchoolAPI.Infrastructure
             services.AddScoped<IExamService, ExamService>();
             services.AddScoped<IExamRepository, ExamRepository>();
 
+            services.AddScoped<IS3FileService, S3FileService>();
+            services.AddScoped<IFileRepository, FileRepository>();
+            services.AddHostedService<FileCleanupService>();
             return services;
         }
     }

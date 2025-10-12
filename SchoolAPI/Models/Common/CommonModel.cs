@@ -715,4 +715,16 @@
         public string TempDesc { get; set; }
     }
 
+    public class StudentLeave
+    {
+        public int LeaveId { get; set; }
+        public string Name { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string Remarks { get; set; }
+        public string ApprovalRemark { get; set; }
+        public string Status { get; set; }
+
+    }
+
 }

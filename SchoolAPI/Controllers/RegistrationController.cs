@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
+﻿using Microsoft.AspNetCore.Mvc;
 using SchoolAPI.Models.Common;
 using SchoolAPI.Models.Registration;
 using SchoolAPI.Repositories.RegistrationRepository;
