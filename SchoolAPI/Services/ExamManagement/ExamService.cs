@@ -87,7 +87,7 @@ namespace SchoolAPI.Services.ExamManagement
                      AdmissionNumber = dr["AdmissionNumber"].ToString(),
                      NoteBook = Convert.ToInt32(dr["NoteBook"]),
                      ObtainedMarks = Convert.ToDecimal(dr["ObtainedMarks"].ToString()),
-                     OralMarks = Convert.ToDecimal(dr["MaxMarks"]),
+                     OralMarks = Convert.ToDecimal(dr["OralMarks"]),
                      SubjectEnrichment = Convert.ToDecimal(dr["SubjectEnrichment"]),
                      WrittenMarks =  Convert.ToDecimal(dr["WrittenMarks"]),
                      Remarks = Convert.ToInt32(dr["Remarks"]),
@@ -171,7 +171,7 @@ namespace SchoolAPI.Services.ExamManagement
                 new DataColumn("WorkEducation", typeof(string)),
                 new DataColumn("ArtEducation", typeof(string)),
                 new DataColumn("PhysicalEducation", typeof(string)),
-                new DataColumn("Decipline ", typeof(string)),
+                new DataColumn("Discipline", typeof(string)),
                 new DataColumn("Remarks", typeof(string))
             });
             foreach (MarksEntryDetail obj in marksEntry.marksEntryDetails)
@@ -181,7 +181,7 @@ namespace SchoolAPI.Services.ExamManagement
                   Convert.ToString(obj.WorkEducation),
                   Convert.ToString(obj.ArtEducation),
                   Convert.ToString(obj.PhysicalEducation),
-                  Convert.ToString(obj.Decipline),
+                  Convert.ToString(obj.Discipline),
                   Convert.ToString(obj.Remarks)
                  );
             }
@@ -354,8 +354,8 @@ namespace SchoolAPI.Services.ExamManagement
                 {
                     ExamCode = dr["ExamCode"].ToString(),
                     ExamName = dr["ExamName"].ToString(),
-                    ResultEndDate = dr["ResultEndDate"].ToString(),
-                    ResultStartDate = dr["ResultStartDate"].ToString(),
+                    ResultEndDate = dr["EndDate"].ToString(),
+                    ResultStartDate = dr["StartDate"].ToString(),
                 });
             }
             return examNamesAndDates;

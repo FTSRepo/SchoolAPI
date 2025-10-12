@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SchoolAPI.Models.Exam;
 using SchoolAPI.Services.ExamManagement;
@@ -14,6 +15,7 @@ namespace SchoolAPI.Controllers
 
         [Route("api/GetPrincipalMessage")]
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPrincipalMessage(int schoolId)
         {
             List<GetMessageResponse> getMessages = await _examService.GetPrincipalMsgAsync(schoolId).ConfigureAwait(false);

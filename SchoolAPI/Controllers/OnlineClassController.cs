@@ -37,7 +37,7 @@ namespace SchoolAPI.Controllers
             if(onlineclasssetup == null)
                 return NotFound();
             var result = await _onelineClassService.AddOnlineClassSetupAsync(onlineclasssetup);
-            return Ok(new { Message = "Online class fetched successfully", Status = result });
+            return Ok(new { Message = "Online class Saved successfully", Status = result });
         }
     }
 }

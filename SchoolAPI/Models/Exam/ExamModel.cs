@@ -147,7 +147,7 @@
         public string ArtEducation { get; set; }
         public string WorkEducation { get; set; }
         public string PhysicalEducation { get; set; }
-        public string Decipline { get; set; }
+        public string Discipline { get; set; }
         public string ExamName { get; set; }
     }
     public class TestEntryMaster
