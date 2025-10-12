@@ -13,12 +13,13 @@ namespace SchoolAPI.Data
         {
             using var con = _dbConnectionFactory.CreateConnection();
             using var cmd = new SqlCommand(@"INSERT INTO FileMetadata 
-        (SchoolId, FileIdentifier, EntityId, FileCategory, FileName, FileUrl, FileSize, ContentType, UploadedAt, ExpiryDate)
+        (SchoolId, FileIdentifier, EntityType, EntityId, FileCategory, FileName, FileUrl, FileSize, ContentType, UploadedAt, ExpiryDate)
         OUTPUT INSERTED.Id 
-        VALUES (@SchoolId, @FileIdentifier, @EntityId, @FileCategory, @FileName, @FileUrl, @FileSize, @ContentType, @UploadedAt, @ExpiryDate)", con);
+        VALUES (@SchoolId, @FileIdentifier, @EntityType, @EntityId, @FileCategory, @FileName, @FileUrl, @FileSize, @ContentType, @UploadedAt, @ExpiryDate)", con);
 
             cmd.Parameters.AddWithValue("@SchoolId", file.SchoolId);
             cmd.Parameters.AddWithValue("@FileIdentifier", file.FileIdentifier);
+            cmd.Parameters.AddWithValue("@EntityType", file.EntityType);
             cmd.Parameters.AddWithValue("@EntityId", file.EntityId);
             cmd.Parameters.AddWithValue("@FileCategory", file.FileCategory);
             cmd.Parameters.AddWithValue("@FileName", file.FileName);
@@ -50,6 +51,7 @@ namespace SchoolAPI.Data
                     SchoolId = reader.GetInt32(reader.GetOrdinal("SchoolId")),
                     FileIdentifier = Enum.Parse<FileIdentifier>(reader["FileIdentifier"].ToString()),
                     FileCategory = Enum.Parse<FileCategory>(reader["FileCategory"].ToString()),
+                    EntityType = Enum.Parse<EntityType>(reader["EntityType"].ToString()),
                     EntityId = reader.GetInt32(reader.GetOrdinal("EntityId")),
                     FileName = reader.GetString(reader.GetOrdinal("FileName")),
                     FileUrl = reader.GetString(reader.GetOrdinal("FileUrl")),

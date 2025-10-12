@@ -14,9 +14,6 @@
         StaffProfile = 3,
         StaffDocument = 4,
         SchoolDocument = 5,
-        Homework = 6,
-        Notice = 7,
-        News = 8,
         Other = 9
     }
 
