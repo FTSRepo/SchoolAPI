@@ -35,6 +35,7 @@ namespace SchoolAPI.Controllers
 
         [Route("api/GetStaffList")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> GetStaffList(int SchoolId)
             {
             var result = await _attendanceService.GetStaffAttendanceAsync(SchoolId);
@@ -50,6 +51,7 @@ namespace SchoolAPI.Controllers
 
         [Route("api/SaveStaffAttendance")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> SaveStaffAttendance(StaffAttendanceRequestM saveAttendanceMaster)
             {
             string result = await _attendanceService.InsertStaffAttendanceAsync(saveAttendanceMaster);
@@ -65,6 +67,7 @@ namespace SchoolAPI.Controllers
 
         [Route("api/SaveStudentsAttendance")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> SaveStudentsAttendance(StudentAttendanceRequestM saveAttendanceMaster)
             {
             string msg = await _attendanceService.InsertStudentAttendanceAsync(saveAttendanceMaster);
@@ -80,6 +83,7 @@ namespace SchoolAPI.Controllers
 
         [Route("api/studentAttendance")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> studentAttendance(AttendanceFilter filter)
             {
             var result = await _attendanceService.GetAttendanceByStudentIdAsync(filter);
@@ -95,6 +99,7 @@ namespace SchoolAPI.Controllers
             }
         [Route("api/StaffAttendance")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> StaffAttendance(AttendanceFilter filter)
             {
             var result = await _attendanceService.GetAttendanceByStaffIdAsync(filter);
@@ -109,6 +114,7 @@ namespace SchoolAPI.Controllers
             }
         [Route("api/getAbsentStudentList")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> getAbsentStudentList(AttendanceFilter filter)
             {
             var result = await _attendanceService.GetAbsentStudentsListAsync(filter);
