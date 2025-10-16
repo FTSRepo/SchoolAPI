@@ -13,6 +13,7 @@ namespace SchoolAPI.Repositories.RegistrationRepository
         Task<List<BloodGroupDto>> GetBloodGroupAsync();
         Task<List<StateDto>> GetStates();
         Task<string> SaveRegistrationAsync(StudentRegistrationModelReq objstudentregistration);
+        Task<StudentRegistrationModelReq> GetRegistrationByRegistrationNoAsync(string registrationNo,int schoolId);
         Task<DataTable> StudentRegistrationAllRecordAsync(int schoolId, int regno, string? type = null, string requestType = "");
         Task<bool> DeleteRegRecordAsync(int id, int schoolId);
         Task<bool> UpdateRegistrationStatusAsync(int schoolId, int regNo, Status status, string remark, int userId);

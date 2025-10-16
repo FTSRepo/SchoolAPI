@@ -184,6 +184,7 @@ namespace SchoolAPI.Repositories.RegistrationRepository
                                 new SqlParameter("@Category", objstudentregistration.Category),
                                 new SqlParameter("@Religion", objstudentregistration.Religion),
                                 new SqlParameter("@SiblingsStudentId", objstudentregistration.SiblingsStudentId),
+                                 new SqlParameter("@EmailId", objstudentregistration.EmailId),
 
                                 // OUTPUT parameter
                                 new SqlParameter("@msg", SqlDbType.VarChar, 100) { Direction = ParameterDirection.Output
@@ -207,6 +208,35 @@ namespace SchoolAPI.Repositories.RegistrationRepository
 
             return result;
             }
+
+        public async Task<StudentRegistrationModelReq> GetRegistrationByRegistrationNoAsync(string registrationNo,int schoolId)
+            {
+            StudentRegistrationModelReq result  = new();
+
+            using(var connection = _dbConnectionFactory.CreateConnection())
+            using(var command = new SqlCommand("USP_GetRegistrationByRegistrationNo",connection))
+                {
+                command.CommandType=CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter("@RegNo",registrationNo));
+                command.Parameters.Add(new SqlParameter("@schoolId",schoolId));
+
+                await connection.OpenAsync();
+
+                using(var reader = await command.ExecuteReaderAsync())
+                    {
+                    if(await reader.ReadAsync())
+                        {
+                        // Assuming your stored procedure returns a single column "RegistrationNumber"
+                        result.Registration =reader["RegistrationNumber"].ToString();
+                        // Map other properties as needed
+                        }
+                    }
+                }
+
+            return result;
+            }
+
         public async Task<DataTable> StudentRegistrationAllRecordAsync(int schoolId, int regno, string? type = null, string requestType = null)
             {
             var dataTable = new DataTable();

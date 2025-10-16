@@ -124,9 +124,10 @@ namespace SchoolAPI.Controllers
                 return BadRequest(new { Message = Ex.Message, Status = false });
                 }
             }
+ 
 
         [HttpGet]
-        [Route("GetRegistration")]
+        [Route("GetRegistrationbySchoolId")]
         [AllowAnonymous]
         public async Task<IActionResult> GetRegistration(int schoolId)
             {
@@ -142,11 +143,11 @@ namespace SchoolAPI.Controllers
 
             }
         [HttpGet]
-        [Route("GetRegistrationByRegNo")]
+        [Route("GetRegistrationByRegistrationNo")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetRegistrationByRegNo(int schoolId, int regNo)
+        public async Task<IActionResult> GetRegistrationByRegistrationNo(int schoolId, string registrationNo)
             {
-            var result = await _registrationService.StudentRegistrationByRegNoAsync(schoolId, regNo);
+            var result = await _registrationRepository.GetRegistrationByRegistrationNoAsync(registrationNo, schoolId);
             if ( result != null )
                 {
                 return Ok(result);
