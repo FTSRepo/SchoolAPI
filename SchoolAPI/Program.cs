@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SchoolAPI.Infrastructure;
+using SchoolAPI.Middlewares;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,23 +16,42 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 // JWT
 var key = Encoding.ASCII.GetBytes(builder.Configuration ["Jwt:Secret"]);
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.RequireHttpsMetadata = false; // false for dev
-        options.SaveToken = true;
-        options.TokenValidationParameters = new TokenValidationParameters
-            {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateIssuerSigningKey = true,
-            ValidateLifetime = true,
-            ClockSkew = TimeSpan.Zero,
-            ValidIssuer = builder.Configuration ["Jwt:Issuer"],
-            ValidAudience = builder.Configuration ["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(key)
-            };
-    });
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//        options.RequireHttpsMetadata = false; // false for dev
+//        options.SaveToken = true;
+//        options.TokenValidationParameters = new TokenValidationParameters
+//            {
+//            ValidateIssuer = true,
+//            ValidateAudience = true,
+//            ValidateIssuerSigningKey = true,
+//            ValidateLifetime = true,
+//            ClockSkew = TimeSpan.Zero,
+//            ValidIssuer = builder.Configuration ["Jwt:Issuer"],
+//            ValidAudience = builder.Configuration ["Jwt:Audience"],
+//            IssuerSigningKey = new SymmetricSecurityKey(key)
+//            };
+//    });
+
+// 🔹 Configure Serilog globally
+Log.Logger=new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .Enrich.FromLogContext()
+    .Enrich.WithThreadId()
+    .Enrich.WithProcessId()
+    .Enrich.WithEnvironmentName()
+    .WriteTo.Console()
+    .WriteTo.File(
+        path: "logs/log-.txt",
+        rollingInterval: RollingInterval.Day,
+        retainedFileCountLimit: 15,
+        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] ({TenantId}) {Message:lj}{NewLine}{Exception}"
+    )
+    .CreateLogger();
+
+// 🔹 Replace default logger
+builder.Host.UseSerilog();
 
 // Controllers
 builder.Services.AddControllers()
@@ -73,12 +94,12 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // Fallback auth (everything requires auth unless [AllowAnonymous])
-builder.Services.AddAuthorization(options =>
-{
-    options.FallbackPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .Build();
-});
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.FallbackPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
+//        .RequireAuthenticatedUser()
+//        .Build();
+//});
 
 builder.Services.AddSingleton<IAmazonS3>(sp =>
 {
@@ -106,6 +127,11 @@ var app = builder.Build();
 // Swagger must be public → place before auth
 app.UseSwagger();
 app.UseSwaggerUI();
+
+
+//Custom middlewares
+app.UseMiddleware<RequestLoggingMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Pipeline
 app.UseHttpsRedirection();
