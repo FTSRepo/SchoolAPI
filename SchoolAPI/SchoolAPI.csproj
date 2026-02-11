@@ -24,9 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Admission\" />
     <Folder Include="Repositories\CertificateRepository\" />
-    <Folder Include="Repositories\AdmissionRepository\" />
     <Folder Include="Repositories\StaffRepository\" />
     <Folder Include="Repositories\StudentRepository\" />
     <Folder Include="Services\CertificateManagement\" />
